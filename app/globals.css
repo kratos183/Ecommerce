@@ -1,0 +1,230 @@
+@import "tailwindcss";
+
+/* ── DARK THEME (default) ──────────────────────────────────────────────────── */
+:root,
+[data-theme="dark"] {
+  --bg-primary: #030712;
+  --bg-secondary: #0A0F1E;
+  --bg-card: #111827;
+  --bg-nav: rgba(9, 9, 20, 0.97);
+  --bg-input: rgba(255, 255, 255, 0.06);
+  --bg-hover: rgba(255, 255, 255, 0.06);
+
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --border-card: #1F2937;
+  --border-nav: rgba(255, 255, 255, 0.08);
+
+  --text-primary: #F9FAFB;
+  --text-secondary: #94A3B8;
+  --text-muted: #475569;
+  --text-faint: #334155;
+
+  --accent: #6366F1;
+  --accent-glow: rgba(99, 102, 241, 0.35);
+
+  --shadow-card: 0 20px 40px rgba(0, 0, 0, 0.4);
+  --shadow-nav: 0 8px 32px rgba(0, 0, 0, 0.4);
+
+  --scrollbar-thumb: #374151;
+}
+
+/* ── LIGHT THEME ───────────────────────────────────────────────────────────── */
+[data-theme="light"] {
+  --bg-primary: #F8FAFF;
+  --bg-secondary: #EEF2FF;
+  --bg-card: #FFFFFF;
+  --bg-nav: rgba(255, 255, 255, 0.97);
+  --bg-input: rgba(99, 102, 241, 0.06);
+  --bg-hover: rgba(99, 102, 241, 0.06);
+
+  --border-subtle: rgba(99, 102, 241, 0.12);
+  --border-card: #E0E7FF;
+  --border-nav: rgba(99, 102, 241, 0.15);
+
+  --text-primary: #1E1B4B;
+  --text-secondary: #4338CA;
+  --text-muted: #6B7280;
+  --text-faint: #9CA3AF;
+
+  --accent: #6366F1;
+  --accent-glow: rgba(99, 102, 241, 0.2);
+
+  --shadow-card: 0 8px 32px rgba(99, 102, 241, 0.1);
+  --shadow-nav: 0 4px 24px rgba(99, 102, 241, 0.12);
+
+  --scrollbar-thumb: #C7D2FE;
+}
+
+/* ── BASE ──────────────────────────────────────────────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--font-geist-sans, 'DM Sans', Arial, sans-serif);
+  transition: background 0.35s ease, color 0.35s ease;
+  scrollbar-width: thin;
+  scrollbar-color: var(--scrollbar-thumb) transparent;
+}
+
+/* ── LIGHT THEME — page-wide overrides ─────────────────────────────────────── */
+[data-theme="light"] body {
+  background: var(--bg-primary);
+}
+
+/* Hero section */
+[data-theme="light"] section {
+  background: var(--bg-primary);
+}
+
+/* Make sure nav bar reflects light mode */
+[data-theme="light"] nav {
+  background: var(--bg-nav) !important;
+  border-bottom-color: var(--border-nav) !important;
+  box-shadow: var(--shadow-nav);
+}
+
+/* Cards globally */
+[data-theme="light"] .ts-card {
+  background: var(--bg-card);
+  border-color: var(--border-card);
+  box-shadow: var(--shadow-card);
+}
+
+/* Smooth theme transition on key elements */
+nav,
+section,
+main,
+aside,
+header,
+footer,
+div[style*="background"],
+div[style*="border"] {
+  transition: background 0.35s ease, border-color 0.35s ease, color 0.35s ease, box-shadow 0.35s ease;
+}
+
+/* ── RESPONSIVE LAYOUT CLASSES ─────────────────────────────────────────────── */
+
+/* Cart & Checkout 2-col grids */
+.rsp-grid-sidebar {
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  gap: 28px;
+  align-items: start;
+}
+
+/* Generic 2-col form grid */
+.rsp-grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+/* Page container padding */
+.rsp-page-pad {
+  padding: 32px;
+}
+
+/* Section heading padding */
+.rsp-section-pad {
+  padding: 32px 32px 28px;
+}
+
+/* Cart items flex row */
+.rsp-cart-item {
+  display: flex;
+  gap: 20px;
+}
+
+/* Cart item image */
+.rsp-cart-img {
+  width: 96px;
+  height: 96px;
+  flex-shrink: 0;
+}
+
+/* Cart item price column */
+.rsp-cart-price {
+  text-align: right;
+  flex-shrink: 0;
+}
+
+/* ── TABLET BREAKPOINT (≤ 900px) ───────────────────────────────────────────── */
+@media (max-width: 900px) {
+  .rsp-grid-sidebar {
+    grid-template-columns: 1fr !important;
+  }
+
+  .rsp-page-pad {
+    padding: 20px 16px !important;
+  }
+
+  .rsp-section-pad {
+    padding: 24px 16px 20px !important;
+  }
+
+  .rsp-cart-img {
+    width: 72px !important;
+    height: 72px !important;
+  }
+}
+
+/* ── MOBILE BREAKPOINT (≤ 640px) ───────────────────────────────────────────── */
+@media (max-width: 640px) {
+  .rsp-grid-2 {
+    grid-template-columns: 1fr !important;
+  }
+
+  .rsp-cart-item {
+    flex-direction: column !important;
+    gap: 12px !important;
+  }
+
+  .rsp-cart-price {
+    text-align: left !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    gap: 12px !important;
+  }
+
+  .rsp-cart-img {
+    width: 100% !important;
+    height: 140px !important;
+    border-radius: 12px !important;
+  }
+
+  /* Hero adjustments */
+  .rsp-hero-sale {
+    flex-direction: column !important;
+    gap: 8px !important;
+    text-align: center !important;
+    padding: 12px 16px !important;
+  }
+
+  .rsp-hero-search {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    border-radius: 16px !important;
+  }
+
+  .rsp-hero-search input {
+    padding: 12px 0 !important;
+    text-align: center !important;
+  }
+
+  .rsp-hero-search button {
+    width: 100% !important;
+  }
+
+  h1 {
+    font-size: clamp(22px, 6vw, 32px) !important;
+  }
+}
