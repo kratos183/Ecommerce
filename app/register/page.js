@@ -47,7 +47,7 @@ export default function RegisterPage() {
     color: t.textPrimary,
     fontSize: 14,
     outline: 'none',
-    fontFamily: 'DM Sans, sans-serif',
+    fontFamily: 'sans-serif',
     transition: 'border-color 0.2s, box-shadow 0.2s, background 0.35s, color 0.35s',
     boxSizing: 'border-box',
   };
@@ -58,7 +58,7 @@ export default function RegisterPage() {
     fontWeight: 700,
     color: t.textSecondary,
     marginBottom: 8,
-    fontFamily: 'Syne, sans-serif',
+    fontFamily: 'sans-serif',
     letterSpacing: '0.04em',
     textTransform: 'uppercase',
     transition: 'color 0.35s ease',
@@ -100,7 +100,7 @@ export default function RegisterPage() {
             {/* Logo */}
             <div style={{ textAlign: 'center', marginBottom: 8 }}>
               <Link href="/" style={{
-                fontFamily: 'Syne, sans-serif',
+                fontFamily: 'sans-serif',
                 fontWeight: 900,
                 fontSize: 24,
                 color: t.textPrimary,
@@ -116,7 +116,7 @@ export default function RegisterPage() {
               color: t.textPrimary,
               textAlign: 'center',
               marginBottom: 8,
-              fontFamily: 'Syne, sans-serif',
+              fontFamily: 'sans-serif',
               letterSpacing: '-0.02em',
               transition: 'color 0.35s ease',
             }}>Create Account</h2>
@@ -184,7 +184,7 @@ export default function RegisterPage() {
                   fontWeight: 800,
                   fontSize: 15,
                   cursor: loading ? 'not-allowed' : 'pointer',
-                  fontFamily: 'Syne, sans-serif',
+                  fontFamily: 'sans-serif',
                   boxShadow: loading ? 'none' : '0 8px 24px rgba(99,102,241,0.35)',
                   transition: 'opacity 0.2s, transform 0.15s',
                   marginTop: 8,
@@ -208,7 +208,7 @@ export default function RegisterPage() {
                 color: '#6366F1',
                 fontWeight: 700,
                 textDecoration: 'none',
-                fontFamily: 'Syne, sans-serif',
+                fontFamily: 'sans-serif',
               }}>
                 Sign in
               </Link>
@@ -230,7 +230,7 @@ export default function RegisterPage() {
           color: '#fff',
           fontSize: 14,
           fontWeight: 700,
-          fontFamily: 'Syne, sans-serif',
+          fontFamily: 'sans-serif',
           boxShadow: '0 8px 24px rgba(0,0,0,0.3)',
           display: 'flex',
           alignItems: 'center',

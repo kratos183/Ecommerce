@@ -30,8 +30,7 @@ function getDiscount(product) {
 }
 
 function getCategoryEmoji(cat) {
-  const map = { Laptops: '💻', Mobiles: '📱', Accessories: '🎧', Tablets: '📟', Gaming: '🎮', Audio: '🔊' };
-  return map[cat] ?? '🔌';
+  return null; // No longer uses emojis
 }
 
 // ─── MICRO-COMPONENTS ────────────────────────────────────────────────────────
@@ -272,13 +271,13 @@ export default function ProductCard({ product }) {
               ) : (
                 <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                   <span style={{
-                    fontSize: 72,
                     filter: hovered ? 'drop-shadow(0 0 28px rgba(99,102,241,0.55))' : 'drop-shadow(0 8px 20px rgba(0,0,0,0.7))',
                     transform: hovered ? 'scale(1.12) translateY(-5px)' : 'scale(1) translateY(0)',
                     transition: 'transform 0.42s cubic-bezier(0.34,1.4,0.64,1), filter 0.42s ease',
-                    display: 'block',
+                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    color: 'rgba(99,102,241,0.4)',
                   }}>
-                    {getCategoryEmoji(product.category)}
+                    <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
                   </span>
                 </div>
               )}
@@ -343,7 +342,11 @@ export default function ProductCard({ product }) {
                 transform: wished ? 'scale(1.15)' : 'scale(1)',
                 transition: 'transform 0.15s, border-color 0.2s, box-shadow 0.2s',
               }}>
-                <span style={{ fontSize: 13 }}>{wished ? '❤️' : '🤍'}</span>
+                <span style={{ color: wished ? '#EF4444' : 'rgba(148,163,184,0.6)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill={wished ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/>
+                  </svg>
+                </span>
               </button>
             </div>
 
@@ -405,14 +408,14 @@ export default function ProductCard({ product }) {
                       fontSize: 11, textDecoration: 'line-through',
                       color: 'rgba(100,116,139,0.55)',
                       letterSpacing: '0.02em',
-                    }}>${product.originalPrice?.toLocaleString()}</span>
+                    }}>₹{product.originalPrice?.toLocaleString()}</span>
                   )}
                   <span style={{
                     fontFamily: 'var(--pc-display)',
                     fontSize: 22, fontWeight: 900, lineHeight: 1,
                     letterSpacing: '-0.02em',
                     color: discount > 0 ? '#34D399' : '#F1F5F9',
-                  }}>${product.price?.toLocaleString()}</span>
+                  }}>₹{product.price?.toLocaleString()}</span>
                   <div style={{ marginTop: 4 }}>
                     <StockPulse inStock={inStock} />
                   </div>

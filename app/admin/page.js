@@ -31,30 +31,26 @@ export default async function AdminDashboard() {
   const totalRevenue = revenueResult[0]?.total || 0;
 
   // Serialise Mongo docs (ObjectId → string, Date → ISO string)
-  const serialise = (doc) =>
-    JSON.parse(JSON.stringify(doc, (key, value) =>
-      typeof value === 'object' && value?.constructor?.name === 'ObjectId'
-        ? value.toString()
-        : value
-    ));
+  const serialise = (doc) => JSON.parse(JSON.stringify(doc));
 
   const stats = { totalUsers, totalProducts, totalOrders, totalRevenue };
 
-  const formattedOrders = orders.map(o => ({
-    ...serialise(o),
+  const formattedOrders = serialise(orders).map(o => ({
+    ...o,
     items: o.products || [],
     status: o.orderStatus || 'processing',
-    user: null,           // populated below if needed
+    user: null,
   }));
 
   // Populate user info on orders
   const userIds = [...new Set(orders.map(o => o.userId?.toString()).filter(Boolean))];
   if (userIds.length > 0) {
     const users = await User.find({ _id: { $in: userIds } }).select('name email').lean();
-    const userMap = {};
-    users.forEach(u => { userMap[u._id.toString()] = serialise(u); });
+    const userMap = Object.fromEntries(
+      serialise(users).map(u => [u._id, u])
+    );
     formattedOrders.forEach(o => {
-      o.user = userMap[o.userId?.toString()] || null;
+      o.user = userMap[o.userId] || null;
     });
   }
 

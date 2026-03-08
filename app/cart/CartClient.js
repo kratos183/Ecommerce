@@ -91,15 +91,15 @@ function CartItem({ item, onUpdate, onRemove, t }) {
       {/* Details */}
       <div style={{ flex: 1, minWidth: 0 }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 4 }}>
-          <span style={{ background: `${catColor}18`, border: `1px solid ${catColor}33`, color: catColor, fontSize: 10, fontWeight: 800, padding: '2px 8px', borderRadius: 20, fontFamily: 'Syne,sans-serif', letterSpacing: '0.06em' }}>
+          <span style={{ background: `${catColor}18`, border: `1px solid ${catColor}33`, color: catColor, fontSize: 10, fontWeight: 800, padding: '2px 8px', borderRadius: 20, fontFamily: 'sans-serif', letterSpacing: '0.06em' }}>
             {product?.category}
           </span>
-          {discount > 0 && <span style={{ background: 'rgba(239,68,68,0.12)', color: '#EF4444', fontSize: 10, fontWeight: 700, padding: '2px 7px', borderRadius: 4, fontFamily: 'Syne,sans-serif' }}>-{discount}%</span>}
+          {discount > 0 && <span style={{ background: 'rgba(239,68,68,0.12)', color: '#EF4444', fontSize: 10, fontWeight: 700, padding: '2px 7px', borderRadius: 4, fontFamily: 'sans-serif' }}>-{discount}%</span>}
         </div>
 
         <Link href={`/products/${product?._id}`} style={{ textDecoration: 'none' }}>
           <h3 style={{
-            color: t.textPrimary, fontSize: 15, fontWeight: 700, fontFamily: 'Syne,sans-serif', marginBottom: 4, lineHeight: 1.3,
+            color: t.textPrimary, fontSize: 15, fontWeight: 700, fontFamily: 'sans-serif', marginBottom: 4, lineHeight: 1.3,
             display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden',
             transition: 'color 0.15s',
           }}
@@ -110,8 +110,8 @@ function CartItem({ item, onUpdate, onRemove, t }) {
 
         {product?.originalPrice && (
           <p style={{ color: t.textFaint, fontSize: 12, marginBottom: 8, transition: 'color 0.35s' }}>
-            <span style={{ textDecoration: 'line-through' }}>${product.originalPrice?.toLocaleString()}</span>
-            <span style={{ color: '#10B981', marginLeft: 6, fontWeight: 600 }}>Save ${(product.originalPrice - product.price)?.toLocaleString()}</span>
+            <span style={{ textDecoration: 'line-through' }}>₹{product.originalPrice?.toLocaleString()}</span>
+            <span style={{ color: '#10B981', marginLeft: 6, fontWeight: 600 }}>Save ₹{(product.originalPrice - product.price)?.toLocaleString()}</span>
           </p>
         )}
 
@@ -128,7 +128,7 @@ function CartItem({ item, onUpdate, onRemove, t }) {
               onMouseLeave={e => e.currentTarget.style.background = 'none'}
             >−</button>
             <span style={{
-              width: 36, textAlign: 'center', color: t.textPrimary, fontSize: 14, fontWeight: 700, fontFamily: 'Syne,sans-serif',
+              width: 36, textAlign: 'center', color: t.textPrimary, fontSize: 14, fontWeight: 700, fontFamily: 'sans-serif',
               opacity: updating ? 0.5 : 1, transition: 'opacity 0.15s, color 0.35s',
             }}>{updating ? '…' : item.quantity}</span>
             <button onClick={() => handleQty(item.quantity + 1)} disabled={updating} style={{
@@ -144,7 +144,7 @@ function CartItem({ item, onUpdate, onRemove, t }) {
 
           <button onClick={handleRemove} disabled={removing} style={{
             background: 'none', border: 'none', color: '#EF4444', fontSize: 12, fontWeight: 700,
-            cursor: 'pointer', fontFamily: 'Syne,sans-serif', opacity: removing ? 0.5 : 1,
+            cursor: 'pointer', fontFamily: 'sans-serif', opacity: removing ? 0.5 : 1,
             display: 'flex', alignItems: 'center', gap: 4, padding: '4px 0',
             transition: 'opacity 0.15s',
           }}
@@ -156,7 +156,7 @@ function CartItem({ item, onUpdate, onRemove, t }) {
 
           <Link href={`/products/${product?._id}`} style={{
             color: t.textFaint, fontSize: 12, fontWeight: 600,
-            textDecoration: 'none', fontFamily: 'Syne,sans-serif',
+            textDecoration: 'none', fontFamily: 'sans-serif',
             transition: 'color 0.15s',
           }}
             onMouseEnter={e => e.currentTarget.style.color = t.textSecondary}
@@ -168,11 +168,11 @@ function CartItem({ item, onUpdate, onRemove, t }) {
       {/* Price */}
       <div className="rsp-cart-price" style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', justifyContent: 'space-between' }}>
         <div>
-          <p style={{ color: t.textPrimary, fontSize: 22, fontWeight: 900, fontFamily: 'Syne,sans-serif', lineHeight: 1, transition: 'color 0.35s' }}>${total}</p>
-          <p style={{ color: t.textFaint, fontSize: 11, marginTop: 3, transition: 'color 0.35s' }}>${product?.price?.toLocaleString()} each</p>
+          <p style={{ color: t.textPrimary, fontSize: 22, fontWeight: 900, fontFamily: 'sans-serif', lineHeight: 1, transition: 'color 0.35s' }}>₹{total}</p>
+          <p style={{ color: t.textFaint, fontSize: 11, marginTop: 3, transition: 'color 0.35s' }}>₹{product?.price?.toLocaleString()}  each</p>
         </div>
         {item.quantity > 1 && (
-          <span style={{ background: 'rgba(99,102,241,0.1)', color: '#818CF8', fontSize: 10, fontWeight: 700, padding: '2px 8px', borderRadius: 4, fontFamily: 'Syne,sans-serif' }}>
+          <span style={{ background: 'rgba(99,102,241,0.1)', color: '#818CF8', fontSize: 10, fontWeight: 700, padding: '2px 8px', borderRadius: 4, fontFamily: 'sans-serif' }}>
             ×{item.quantity}
           </span>
         )}
@@ -267,19 +267,19 @@ export default function CartClient() {
         input:focus{outline:none;}
       `}</style>
 
-      <div style={{ background: t.bgPage, minHeight: '100vh', padding: '0 0 80px', fontFamily: 'DM Sans, sans-serif', color: t.textPrimary, transition: 'background 0.35s, color 0.35s' }}>
+      <div style={{ background: t.bgPage, minHeight: '100vh', padding: '0 0 80px', fontFamily: 'sans-serif', color: t.textPrimary, transition: 'background 0.35s, color 0.35s' }}>
 
         {/* Header */}
         <div className="rsp-section-pad" style={{ background: `linear-gradient(180deg, ${t.bgSection} 0%, ${t.bgPage} 100%)`, borderBottom: `1px solid ${t.borderNav}`, transition: 'background 0.35s, border-color 0.35s' }}>
           <div style={{ maxWidth: 1280, margin: '0 auto' }}>
-            <p style={{ color: t.textVeryFaint, fontSize: 12, fontWeight: 600, fontFamily: 'Syne,sans-serif', marginBottom: 6, transition: 'color 0.35s' }}>
+            <p style={{ color: t.textVeryFaint, fontSize: 12, fontWeight: 600, fontFamily: 'sans-serif', marginBottom: 6, transition: 'color 0.35s' }}>
               <Link href="/" style={{ color: t.textVeryFaint, textDecoration: 'none' }}>Home</Link>
               <span style={{ margin: '0 6px', color: t.textTiny }}>›</span>
               <span style={{ color: t.textSecondary }}>Shopping Cart</span>
             </p>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
               <div>
-                <h1 style={{ color: t.textPrimary, fontSize: 32, fontWeight: 900, fontFamily: 'Syne,sans-serif', letterSpacing: '-0.02em', transition: 'color 0.35s' }}>
+                <h1 style={{ color: t.textPrimary, fontSize: 32, fontWeight: 900, fontFamily: 'sans-serif', letterSpacing: '-0.02em', transition: 'color 0.35s' }}>
                   Shopping Cart
                 </h1>
                 {!loading && itemCount > 0 && (
@@ -289,7 +289,7 @@ export default function CartClient() {
               <Link href="/products" style={{
                 background: t.bgSubtle, border: `1px solid ${t.borderInput}`,
                 color: t.textSecondary, borderRadius: 12, padding: '10px 18px',
-                fontSize: 13, fontWeight: 600, textDecoration: 'none', fontFamily: 'Syne,sans-serif',
+                fontSize: 13, fontWeight: 600, textDecoration: 'none', fontFamily: 'sans-serif',
                 transition: 'background 0.15s, color 0.15s',
               }}
                 onMouseEnter={e => { e.currentTarget.style.background = t.bgHover; e.currentTarget.style.color = t.textPrimary; }}
@@ -312,7 +312,7 @@ export default function CartClient() {
             /* Empty state */
             <div style={{ textAlign: 'center', padding: '80px 32px', background: t.bgCard, border: `1px solid ${t.borderCard}`, borderRadius: 24, animation: 'fadeIn 0.4s ease', transition: 'background 0.35s, border-color 0.35s' }}>
               <div style={{ fontSize: 80, marginBottom: 20, filter: 'grayscale(0.3)' }}>🛒</div>
-              <h2 style={{ color: t.textPrimary, fontSize: 24, fontWeight: 900, fontFamily: 'Syne,sans-serif', marginBottom: 10, transition: 'color 0.35s' }}>Your cart is empty</h2>
+              <h2 style={{ color: t.textPrimary, fontSize: 24, fontWeight: 900, fontFamily: 'sans-serif', marginBottom: 10, transition: 'color 0.35s' }}>Your cart is empty</h2>
               <p style={{ color: t.textFaint, fontSize: 14, marginBottom: 32, maxWidth: 360, margin: '0 auto 32px', transition: 'color 0.35s' }}>
                 Looks like you haven't added anything yet. Discover our latest tech drops.
               </p>
@@ -320,7 +320,7 @@ export default function CartClient() {
                 background: 'linear-gradient(135deg,#6366F1,#8B5CF6)',
                 color: '#fff', padding: '14px 32px', borderRadius: 12,
                 fontWeight: 800, fontSize: 14, textDecoration: 'none',
-                fontFamily: 'Syne,sans-serif',
+                fontFamily: 'sans-serif',
                 boxShadow: '0 8px 24px rgba(99,102,241,0.4)',
               }}>Browse Products</Link>
             </div>
@@ -339,18 +339,18 @@ export default function CartClient() {
               {/* Order summary */}
               <div style={{ position: 'sticky', top: 88, background: t.bgSection, border: `1px solid ${t.borderMuted}`, borderRadius: 22, overflow: 'hidden', animation: 'fadeIn 0.5s ease', transition: 'background 0.35s, border-color 0.35s' }}>
                 <div style={{ padding: '24px 24px 0', borderBottom: `1px solid ${t.borderMuted}`, paddingBottom: 20 }}>
-                  <h2 style={{ color: t.textPrimary, fontSize: 18, fontWeight: 800, fontFamily: 'Syne,sans-serif', transition: 'color 0.35s' }}>Order Summary</h2>
+                  <h2 style={{ color: t.textPrimary, fontSize: 18, fontWeight: 800, fontFamily: 'sans-serif', transition: 'color 0.35s' }}>Order Summary</h2>
                 </div>
 
                 <div style={{ padding: 24 }}>
                   <div style={{ display: 'flex', flexDirection: 'column', gap: 10, borderTop: `1px solid ${t.borderMuted}`, paddingTop: 20, marginBottom: 20 }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                       <span style={{ color: t.textFaint, fontSize: 13, transition: 'color 0.35s' }}>Subtotal ({itemCount} items)</span>
-                      <span style={{ color: t.textSecondary, fontSize: 13, fontWeight: 600, transition: 'color 0.35s' }}>${subtotal.toFixed(2)}</span>
+                      <span style={{ color: t.textSecondary, fontSize: 13, fontWeight: 600, transition: 'color 0.35s' }}>₹{subtotal.toFixed(2)}</span>
                     </div>
                     <div style={{ display: 'flex', justifyContent: 'space-between', borderTop: `1px solid ${t.borderMuted}`, paddingTop: 14, marginTop: 4 }}>
-                      <span style={{ color: t.textPrimary, fontSize: 16, fontWeight: 800, fontFamily: 'Syne,sans-serif', transition: 'color 0.35s' }}>Total</span>
-                      <span style={{ color: t.textPrimary, fontSize: 22, fontWeight: 900, fontFamily: 'Syne,sans-serif', transition: 'color 0.35s' }}>${total.toFixed(2)}</span>
+                      <span style={{ color: t.textPrimary, fontSize: 16, fontWeight: 800, fontFamily: 'sans-serif', transition: 'color 0.35s' }}>Total</span>
+                      <span style={{ color: t.textPrimary, fontSize: 22, fontWeight: 900, fontFamily: 'sans-serif', transition: 'color 0.35s' }}>₹{total.toFixed(2)}</span>
                     </div>
                   </div>
 
@@ -359,7 +359,7 @@ export default function CartClient() {
                     background: 'linear-gradient(135deg,#6366F1,#8B5CF6)',
                     color: '#fff', padding: '15px', borderRadius: 14,
                     fontWeight: 800, fontSize: 15, textDecoration: 'none',
-                    fontFamily: 'Syne,sans-serif',
+                    fontFamily: 'sans-serif',
                     boxShadow: '0 8px 24px rgba(99,102,241,0.4)',
                     transition: 'opacity 0.2s, transform 0.15s',
                   }}

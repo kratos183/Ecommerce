@@ -2,7 +2,7 @@ import ProductsClient from './ProductsClient';
 
 async function getProducts(page = 1, search = '', category = '', sort = '', minPrice = '', maxPrice = '', rating = '') {
   try {
-    const params = new URLSearchParams({ page, limit: 12 });
+    const params = new URLSearchParams({ page, limit: 9 });
     if (search) params.append('search', search);
     if (category) params.append('category', category);
     if (sort) params.append('sort', sort);

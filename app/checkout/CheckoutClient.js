@@ -34,7 +34,7 @@ function StepIndicator({ current }) {
               }}>
                 {done ? '✓' : step.icon}
               </div>
-              <span style={{ color: active ? 'var(--text-primary)' : done ? '#10B981' : 'var(--text-muted)', fontSize: 11, fontWeight: 700, fontFamily: 'Syne,sans-serif' }}>
+              <span style={{ color: active ? 'var(--text-primary)' : done ? '#10B981' : 'var(--text-muted)', fontSize: 11, fontWeight: 700, fontFamily: 'sans-serif' }}>
                 {step.label}
               </span>
             </div>
@@ -52,7 +52,7 @@ function InputField({ label, id, type = 'text', value, onChange, placeholder, re
   const [focused, setFocused] = useState(false);
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
-      <label htmlFor={id} style={{ color: 'var(--text-muted)', fontSize: 11, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', fontFamily: 'Syne,sans-serif' }}>
+      <label htmlFor={id} style={{ color: 'var(--text-muted)', fontSize: 11, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', fontFamily: 'sans-serif' }}>
         {label}{required && <span style={{ color: '#EF4444', marginLeft: 3 }}>*</span>}
       </label>
       <div style={{ position: 'relative' }}>
@@ -68,7 +68,7 @@ function InputField({ label, id, type = 'text', value, onChange, placeholder, re
             borderRadius: 12,
             padding: `13px 16px 13px ${icon ? '44px' : '16px'}`,
             color: 'var(--text-primary)', fontSize: 14,
-            fontFamily: 'DM Sans,sans-serif',
+            fontFamily: 'sans-serif',
             outline: 'none',
             transition: 'border-color 0.2s, box-shadow 0.2s, background 0.2s',
             boxShadow: focused ? '0 0 0 3px rgba(99,102,241,0.1)' : 'none',
@@ -132,6 +132,14 @@ export default function CheckoutClient() {
     if (step === 2 && validatePayment()) setStep(3);
   };
 
+  const loadRazorpay = () => new Promise((resolve) => {
+    const script = document.createElement('script');
+    script.src = 'https://checkout.razorpay.com/v1/checkout.js';
+    script.onload = () => resolve(true);
+    script.onerror = () => resolve(false);
+    document.body.appendChild(script);
+  });
+
   const handleSubmit = async () => {
     setPlacing(true);
     try {
@@ -140,10 +148,75 @@ export default function CheckoutClient() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ ...shipping, paymentMethod: payment.method }),
       });
-      if (res.ok) router.push('/dashboard/user?order=success');
-      else alert('Checkout failed. Please try again.');
-    } catch { alert('An error occurred.'); }
-    finally { setPlacing(false); }
+      const data = await res.json();
+      
+      if (!res.ok) {
+        alert(data.error || 'Checkout failed. Please try again.');
+        setPlacing(false);
+        return;
+      }
+
+      if (data.paymentRequired && data.rzpOrderId) {
+        const isLoaded = await loadRazorpay();
+        if (!isLoaded) {
+          alert('Razorpay SDK failed to load. Are you online?');
+          setPlacing(false);
+          return;
+        }
+
+        const options = {
+          key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID, // Ensure this is set in .env.local
+          amount: data.amount,
+          currency: data.currency,
+          name: 'TechStore',
+          description: 'Order Payment',
+          order_id: data.rzpOrderId,
+          handler: async function (response) {
+            try {
+              const verifyRes = await fetch('/api/checkout/verify', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                  razorpay_order_id: response.razorpay_order_id,
+                  razorpay_payment_id: response.razorpay_payment_id,
+                  razorpay_signature: response.razorpay_signature,
+                  dbOrderId: data.order._id
+                })
+              });
+              if (verifyRes.ok) {
+                router.push('/dashboard/user?order=success');
+              } else {
+                alert('Payment verification failed.');
+                setPlacing(false);
+              }
+            } catch (err) {
+              alert('Verification error.');
+              setPlacing(false);
+            }
+          },
+          prefill: {
+            name: payment.cardName || 'Guest User',
+            email: 'user@example.com',
+            contact: shipping.phone
+          },
+          theme: {
+            color: '#6366F1'
+          }
+        };
+
+        const rzp = new window.Razorpay(options);
+        rzp.on('payment.failed', function (response) {
+          alert(`Payment Failed: ${response.error.description}`);
+          setPlacing(false);
+        });
+        rzp.open();
+      } else {
+        router.push('/dashboard/user?order=success');
+      }
+    } catch { 
+      alert('An error occurred.'); 
+      setPlacing(false);
+    }
   };
 
   const fmtCard = (val) => val.replace(/\D/g, '').slice(0, 16).replace(/(.{4})/g, '$1 ').trim();
@@ -154,7 +227,7 @@ export default function CheckoutClient() {
 
   if (loading) return (
     <div style={{ background: 'var(--bg-primary)', minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-      <div style={{ color: 'var(--text-muted)', fontSize: 14, fontFamily: 'DM Sans,sans-serif' }}>Loading checkout…</div>
+      <div style={{ color: 'var(--text-muted)', fontSize: 14, fontFamily: 'sans-serif' }}>Loading checkout…</div>
     </div>
   );
 
@@ -175,7 +248,7 @@ export default function CheckoutClient() {
           padding:13px 16px;
           color:var(--text-primary);
           font-size:14px;
-          font-family:'DM Sans',sans-serif;
+          font-family: sans-serif;
           cursor:pointer;
           width:100%;
           transition:background 0.2s, border-color 0.2s;
@@ -206,7 +279,7 @@ export default function CheckoutClient() {
           color:var(--text-muted);
           border-radius:12px; padding:12px 8px;
           display:flex; flex-direction:column; align-items:center; gap:4px;
-          cursor:pointer; font-family:Syne,sans-serif; font-size:11px; font-weight:700;
+          cursor:pointer; font-family: sans-serif; font-size:11px; font-weight:700;
           transition:all 0.15s;
         }
         .checkout-pay-btn.active{
@@ -231,7 +304,7 @@ export default function CheckoutClient() {
           border:1px solid var(--border-subtle);
           color:var(--text-secondary);
           border-radius:14px; padding:14px 24px;
-          font-size:14px; font-weight:700; cursor:pointer; font-family:Syne,sans-serif;
+          font-size:14px; font-weight:700; cursor:pointer; font-family: sans-serif;
           transition:background 0.15s;
         }
         .checkout-back-btn:hover{ background:var(--bg-hover); }
@@ -243,16 +316,16 @@ export default function CheckoutClient() {
         <div className="rsp-section-pad" style={{ background: 'var(--bg-secondary)', borderBottom: '1px solid var(--border-card)' }}>
           <div style={{ maxWidth: 1280, margin: '0 auto', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
             <div>
-              <p style={{ color: 'var(--text-faint)', fontSize: 12, fontFamily: 'Syne,sans-serif', fontWeight: 600 }}>
+              <p style={{ color: 'var(--text-faint)', fontSize: 12, fontFamily: 'sans-serif', fontWeight: 600 }}>
                 <Link href="/" style={{ color: 'var(--text-faint)', textDecoration: 'none' }}>Home</Link>
                 <span style={{ margin: '0 6px' }}>›</span>
                 <Link href="/cart" style={{ color: 'var(--text-faint)', textDecoration: 'none' }}>Cart</Link>
                 <span style={{ margin: '0 6px' }}>›</span>
                 <span style={{ color: 'var(--text-secondary)' }}>Checkout</span>
               </p>
-              <h1 style={{ color: 'var(--text-primary)', fontSize: 28, fontWeight: 900, fontFamily: 'Syne,sans-serif', marginTop: 4 }}>Checkout</h1>
+              <h1 style={{ color: 'var(--text-primary)', fontSize: 28, fontWeight: 900, fontFamily: 'sans-serif', marginTop: 4 }}>Checkout</h1>
             </div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 6, color: '#10B981', fontSize: 12, fontWeight: 600, fontFamily: 'Syne,sans-serif' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 6, color: '#10B981', fontSize: 12, fontWeight: 600, fontFamily: 'sans-serif' }}>
               <span>🔒</span> SSL Secured
             </div>
           </div>
@@ -272,7 +345,7 @@ export default function CheckoutClient() {
                   <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 28 }}>
                     <div style={{ width: 40, height: 40, background: 'rgba(99,102,241,0.15)', border: '1px solid rgba(99,102,241,0.3)', borderRadius: 12, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 20 }}>📦</div>
                     <div>
-                      <h2 style={{ color: 'var(--text-primary)', fontSize: 18, fontWeight: 800, fontFamily: 'Syne,sans-serif' }}>Shipping Information</h2>
+                      <h2 style={{ color: 'var(--text-primary)', fontSize: 18, fontWeight: 800, fontFamily: 'sans-serif' }}>Shipping Information</h2>
                       <p style={{ color: 'var(--text-muted)', fontSize: 12 }}>Where should we deliver your order?</p>
                     </div>
                   </div>
@@ -296,7 +369,7 @@ export default function CheckoutClient() {
                         onChange={e => setShipping({ ...shipping, postalCode: e.target.value })}
                         placeholder="400001" required error={errors.postalCode} />
                       <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
-                        <label style={{ color: 'var(--text-muted)', fontSize: 11, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', fontFamily: 'Syne,sans-serif' }}>Country</label>
+                        <label style={{ color: 'var(--text-muted)', fontSize: 11, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', fontFamily: 'sans-serif' }}>Country</label>
                         <select
                           className="checkout-select"
                           value={shipping.country}
@@ -317,7 +390,7 @@ export default function CheckoutClient() {
 
                     {/* Delivery option */}
                     <div>
-                      <p style={{ color: 'var(--text-muted)', fontSize: 11, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', fontFamily: 'Syne,sans-serif', marginBottom: 10 }}>Delivery Method</p>
+                      <p style={{ color: 'var(--text-muted)', fontSize: 11, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', fontFamily: 'sans-serif', marginBottom: 10 }}>Delivery Method</p>
                       <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
                         {[
                           { id: 'standard', label: 'Standard Delivery', sub: '3-5 business days', price: 'Free', icon: '📦' },
@@ -327,10 +400,10 @@ export default function CheckoutClient() {
                             <input type="radio" name="delivery" defaultChecked={opt.id === 'standard'} style={{ accentColor: '#6366F1', width: 16, height: 16 }} />
                             <span style={{ fontSize: 20 }}>{opt.icon}</span>
                             <div style={{ flex: 1 }}>
-                              <p style={{ color: 'var(--text-primary)', fontSize: 13, fontWeight: 700, fontFamily: 'Syne,sans-serif' }}>{opt.label}</p>
+                              <p style={{ color: 'var(--text-primary)', fontSize: 13, fontWeight: 700, fontFamily: 'sans-serif' }}>{opt.label}</p>
                               <p style={{ color: 'var(--text-muted)', fontSize: 11 }}>{opt.sub}</p>
                             </div>
-                            <span style={{ color: opt.price === 'Free' ? '#10B981' : 'var(--text-secondary)', fontSize: 13, fontWeight: 700, fontFamily: 'Syne,sans-serif' }}>{opt.price}</span>
+                            <span style={{ color: opt.price === 'Free' ? '#10B981' : 'var(--text-secondary)', fontSize: 13, fontWeight: 700, fontFamily: 'sans-serif' }}>{opt.price}</span>
                           </label>
                         ))}
                       </div>
@@ -345,7 +418,7 @@ export default function CheckoutClient() {
                   <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 28 }}>
                     <div style={{ width: 40, height: 40, background: 'rgba(99,102,241,0.15)', border: '1px solid rgba(99,102,241,0.3)', borderRadius: 12, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 20 }}>💳</div>
                     <div>
-                      <h2 style={{ color: 'var(--text-primary)', fontSize: 18, fontWeight: 800, fontFamily: 'Syne,sans-serif' }}>Payment Method</h2>
+                      <h2 style={{ color: 'var(--text-primary)', fontSize: 18, fontWeight: 800, fontFamily: 'sans-serif' }}>Payment Method</h2>
                       <p style={{ color: 'var(--text-muted)', fontSize: 12 }}>Your payment info is fully encrypted</p>
                     </div>
                   </div>
@@ -428,7 +501,7 @@ export default function CheckoutClient() {
                   <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 28 }}>
                     <div style={{ width: 40, height: 40, background: 'rgba(16,185,129,0.15)', border: '1px solid rgba(16,185,129,0.3)', borderRadius: 12, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 20 }}>✓</div>
                     <div>
-                      <h2 style={{ color: 'var(--text-primary)', fontSize: 18, fontWeight: 800, fontFamily: 'Syne,sans-serif' }}>Review & Confirm</h2>
+                      <h2 style={{ color: 'var(--text-primary)', fontSize: 18, fontWeight: 800, fontFamily: 'sans-serif' }}>Review & Confirm</h2>
                       <p style={{ color: 'var(--text-muted)', fontSize: 12 }}>Double-check everything before placing your order</p>
                     </div>
                   </div>
@@ -436,8 +509,8 @@ export default function CheckoutClient() {
                   {/* Shipping summary */}
                   <div className="checkout-review-box">
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 10 }}>
-                      <p style={{ color: 'var(--text-muted)', fontSize: 11, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', fontFamily: 'Syne,sans-serif' }}>Shipping to</p>
-                      <button onClick={() => setStep(1)} style={{ background: 'none', border: 'none', color: '#6366F1', fontSize: 12, fontWeight: 600, cursor: 'pointer', fontFamily: 'Syne,sans-serif' }}>Edit</button>
+                      <p style={{ color: 'var(--text-muted)', fontSize: 11, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', fontFamily: 'sans-serif' }}>Shipping to</p>
+                      <button onClick={() => setStep(1)} style={{ background: 'none', border: 'none', color: '#6366F1', fontSize: 12, fontWeight: 600, cursor: 'pointer', fontFamily: 'sans-serif' }}>Edit</button>
                     </div>
                     <p style={{ color: 'var(--text-primary)', fontSize: 14 }}>{shipping.address}</p>
                     <p style={{ color: 'var(--text-secondary)', fontSize: 13 }}>{[shipping.city, shipping.state, shipping.postalCode, shipping.country].filter(Boolean).join(', ')}</p>
@@ -447,8 +520,8 @@ export default function CheckoutClient() {
                   {/* Payment summary */}
                   <div className="checkout-review-box" style={{ marginBottom: 24 }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 10 }}>
-                      <p style={{ color: 'var(--text-muted)', fontSize: 11, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', fontFamily: 'Syne,sans-serif' }}>Payment</p>
-                      <button onClick={() => setStep(2)} style={{ background: 'none', border: 'none', color: '#6366F1', fontSize: 12, fontWeight: 600, cursor: 'pointer', fontFamily: 'Syne,sans-serif' }}>Edit</button>
+                      <p style={{ color: 'var(--text-muted)', fontSize: 11, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', fontFamily: 'sans-serif' }}>Payment</p>
+                      <button onClick={() => setStep(2)} style={{ background: 'none', border: 'none', color: '#6366F1', fontSize: 12, fontWeight: 600, cursor: 'pointer', fontFamily: 'sans-serif' }}>Edit</button>
                     </div>
                     <p style={{ color: 'var(--text-primary)', fontSize: 14, display: 'flex', alignItems: 'center', gap: 8 }}>
                       {{ card: '💳', upi: '📲', paypal: '🅿', cod: '💵' }[payment.method]}
@@ -458,7 +531,7 @@ export default function CheckoutClient() {
 
                   {/* Items */}
                   <div style={{ display: 'flex', flexDirection: 'column', gap: 8, marginBottom: 24 }}>
-                    <p style={{ color: 'var(--text-muted)', fontSize: 11, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', fontFamily: 'Syne,sans-serif', marginBottom: 4 }}>Items ({itemCount})</p>
+                    <p style={{ color: 'var(--text-muted)', fontSize: 11, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', fontFamily: 'sans-serif', marginBottom: 4 }}>Items ({itemCount})</p>
                     {cart?.items?.map(item => (
                       <div key={item.product?._id} style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '10px 14px', background: 'var(--bg-input)', borderRadius: 10 }}>
                         <span style={{ fontSize: 22 }}>{getCatIcon(item.product?.category)}</span>
@@ -466,7 +539,7 @@ export default function CheckoutClient() {
                           {item.product?.name || item.product?.title}
                         </p>
                         <span style={{ color: 'var(--text-muted)', fontSize: 12 }}>×{item.quantity}</span>
-                        <span style={{ color: 'var(--text-primary)', fontSize: 13, fontWeight: 700, fontFamily: 'Syne,sans-serif' }}>
+                        <span style={{ color: 'var(--text-primary)', fontSize: 13, fontWeight: 700, fontFamily: 'sans-serif' }}>
                           ${((item.product?.price || 0) * item.quantity).toFixed(2)}
                         </span>
                       </div>
@@ -487,7 +560,7 @@ export default function CheckoutClient() {
                     background: 'linear-gradient(135deg,#6366F1,#8B5CF6)',
                     color: '#fff', border: 'none', borderRadius: 14,
                     padding: '14px', fontSize: 14, fontWeight: 800, cursor: 'pointer',
-                    fontFamily: 'Syne,sans-serif',
+                    fontFamily: 'sans-serif',
                     boxShadow: '0 8px 24px rgba(99,102,241,0.35)',
                     transition: 'opacity 0.2s, transform 0.15s',
                   }}
@@ -504,7 +577,7 @@ export default function CheckoutClient() {
                     border: placing ? '1px solid rgba(16,185,129,0.4)' : 'none',
                     borderRadius: 14, padding: '14px',
                     fontSize: 14, fontWeight: 800, cursor: placing ? 'not-allowed' : 'pointer',
-                    fontFamily: 'Syne,sans-serif',
+                    fontFamily: 'sans-serif',
                     boxShadow: placing ? 'none' : '0 8px 24px rgba(16,185,129,0.35)',
                     display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10,
                     transition: 'all 0.2s',
@@ -523,7 +596,7 @@ export default function CheckoutClient() {
             {/* Right: Order summary */}
             <div style={{ position: 'sticky', top: 88, background: 'var(--bg-card)', border: '1px solid var(--border-card)', borderRadius: 22, overflow: 'hidden', animation: 'fadeIn 0.5s ease', boxShadow: 'var(--shadow-card)' }}>
               <div style={{ padding: '22px 24px', borderBottom: '1px solid var(--border-card)' }}>
-                <h2 style={{ color: 'var(--text-primary)', fontSize: 16, fontWeight: 800, fontFamily: 'Syne,sans-serif' }}>
+                <h2 style={{ color: 'var(--text-primary)', fontSize: 16, fontWeight: 800, fontFamily: 'sans-serif' }}>
                   Order Summary · {itemCount} item{itemCount !== 1 ? 's' : ''}
                 </h2>
               </div>
@@ -540,7 +613,7 @@ export default function CheckoutClient() {
                         </p>
                         <p style={{ color: 'var(--text-muted)', fontSize: 11 }}>Qty: {item.quantity}</p>
                       </div>
-                      <span style={{ color: 'var(--text-primary)', fontSize: 13, fontWeight: 700, fontFamily: 'Syne,sans-serif', flexShrink: 0 }}>
+                      <span style={{ color: 'var(--text-primary)', fontSize: 13, fontWeight: 700, fontFamily: 'sans-serif', flexShrink: 0 }}>
                         ${((item.product?.price || 0) * item.quantity).toFixed(2)}
                       </span>
                     </div>
@@ -550,15 +623,15 @@ export default function CheckoutClient() {
                 <div style={{ borderTop: '1px solid var(--border-card)', paddingTop: 18, display: 'flex', flexDirection: 'column', gap: 10 }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                     <span style={{ color: 'var(--text-muted)', fontSize: 13 }}>Subtotal</span>
-                    <span style={{ color: 'var(--text-secondary)', fontSize: 13, fontWeight: 600 }}>${subtotal.toFixed(2)}</span>
+                    <span style={{ color: 'var(--text-secondary)', fontSize: 13, fontWeight: 600 }}>₹{subtotal.toFixed(2)}</span>
                   </div>
                   <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                     <span style={{ color: 'var(--text-muted)', fontSize: 13 }}>Shipping</span>
                     <span style={{ color: '#10B981', fontSize: 13, fontWeight: 600 }}>Free</span>
                   </div>
                   <div style={{ display: 'flex', justifyContent: 'space-between', borderTop: '1px solid var(--border-card)', paddingTop: 14 }}>
-                    <span style={{ color: 'var(--text-primary)', fontSize: 16, fontWeight: 800, fontFamily: 'Syne,sans-serif' }}>Total</span>
-                    <span style={{ color: 'var(--text-primary)', fontSize: 22, fontWeight: 900, fontFamily: 'Syne,sans-serif' }}>${subtotal.toFixed(2)}</span>
+                    <span style={{ color: 'var(--text-primary)', fontSize: 16, fontWeight: 800, fontFamily: 'sans-serif' }}>Total</span>
+                    <span style={{ color: 'var(--text-primary)', fontSize: 22, fontWeight: 900, fontFamily: 'sans-serif' }}>₹{subtotal.toFixed(2)}</span>
                   </div>
                 </div>
 
@@ -567,7 +640,7 @@ export default function CheckoutClient() {
                   {[['🔒', 'Encrypted & secure'], ['↩️', '30-day easy returns'], ['🚀', 'Fast delivery'], ['🛡️', 'Buyer protection']].map(([icon, label]) => (
                     <div key={label} style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
                       <span style={{ fontSize: 14 }}>{icon}</span>
-                      <span style={{ color: 'var(--text-faint)', fontSize: 11, fontWeight: 600, fontFamily: 'Syne,sans-serif' }}>{label}</span>
+                      <span style={{ color: 'var(--text-faint)', fontSize: 11, fontWeight: 600, fontFamily: 'sans-serif' }}>{label}</span>
                     </div>
                   ))}
                 </div>

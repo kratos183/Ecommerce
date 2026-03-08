@@ -30,10 +30,10 @@ const SORT_OPTIONS = [
 ];
 
 const PRICE_RANGES = [
-  { label: 'Under $300', min: 0, max: 300 },
-  { label: '$300 – $700', min: 300, max: 700 },
-  { label: '$700 – $1,200', min: 700, max: 1200 },
-  { label: '$1,200+', min: 1200, max: 99999 },
+  { label: 'Under ₹300', min: 0, max: 300 },
+  { label: '₹300 – ₹700', min: 300, max: 700 },
+  { label: '₹700 – ₹1,200', min: 700, max: 1200 },
+  { label: '₹1,200+', min: 1200, max: 99999 },
 ];
 
 const CAT_COLORS = {
@@ -93,21 +93,21 @@ function ProductCard({ product, onCompare, isComparing, viewMode }) {
         {/* Info */}
         <div style={{ flex: 1, minWidth: 0 }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 4 }}>
-            {product.badge && <span style={{ background: getBadgeColor(product.badge), color: '#000', fontSize: 9, fontWeight: 800, padding: '2px 7px', borderRadius: 4, textTransform: 'uppercase', fontFamily: 'Syne, sans-serif' }}>{product.badge}</span>}
-            <span style={{ color: catColor, fontSize: 11, fontWeight: 600, fontFamily: 'Syne, sans-serif' }}>{product.category}</span>
+            {product.badge && <span style={{ background: getBadgeColor(product.badge), color: '#000', fontSize: 9, fontWeight: 800, padding: '2px 7px', borderRadius: 4, textTransform: 'uppercase', fontFamily: 'sans-serif' }}>{product.badge}</span>}
+            <span style={{ color: catColor, fontSize: 11, fontWeight: 600, fontFamily: 'sans-serif' }}>{product.category}</span>
           </div>
-          <h3 style={{ color: t.textPrimary, fontSize: 15, fontWeight: 700, fontFamily: 'Syne, sans-serif', margin: '0 0 6px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{product.name}</h3>
+          <h3 style={{ color: t.textPrimary, fontSize: 15, fontWeight: 700, fontFamily: 'sans-serif', margin: '0 0 6px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{product.name}</h3>
           <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
             <Stars rating={product.rating} />
             <span style={{ color: t.textFaint, fontSize: 11 }}>{product.rating} ({product.reviews?.toLocaleString()})</span>
           </div>
-          {product.stock <= 5 && <p style={{ color: '#F59E0B', fontSize: 11, fontWeight: 600, marginTop: 4 }}>⚡ Only {product.stock} left</p>}
+          {product.stock <= 5 && <p style={{ color: '#F59E0B', fontSize: 11, fontWeight: 600, marginTop: 4 }}>Only {product.stock} left</p>}
         </div>
         {/* Price + Actions */}
         <div style={{ display: 'flex', alignItems: 'center', gap: 16, flexShrink: 0 }}>
           <div style={{ textAlign: 'right' }}>
-            <div style={{ color: t.textPrimary, fontSize: 20, fontWeight: 800, fontFamily: 'Syne, sans-serif' }}>${product.price?.toLocaleString()}</div>
-            {product.originalPrice && <div style={{ color: t.textFaint, fontSize: 12, textDecoration: 'line-through' }}>${product.originalPrice?.toLocaleString()}</div>}
+            <div style={{ color: t.textPrimary, fontSize: 20, fontWeight: 800, fontFamily: 'sans-serif' }}>₹{product.price?.toLocaleString()}</div>
+            {product.originalPrice && <div style={{ color: t.textFaint, fontSize: 12, textDecoration: 'line-through' }}>₹{product.originalPrice?.toLocaleString()}</div>}
             {discount > 0 && <div style={{ color: '#10B981', fontSize: 11, fontWeight: 700 }}>Save {discount}%</div>}
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
@@ -115,16 +115,16 @@ function ProductCard({ product, onCompare, isComparing, viewMode }) {
               background: added ? '#10B981' : '#2563EB',
               color: '#fff', border: 'none', borderRadius: 10,
               padding: '10px 18px', fontSize: 12, fontWeight: 700,
-              cursor: 'pointer', fontFamily: 'Syne, sans-serif',
+              cursor: 'pointer', fontFamily: 'sans-serif',
               transition: 'background 0.2s', whiteSpace: 'nowrap',
-            }}>{added ? '✓ Added' : '+ Cart'}</button>
+            }}>{added ? 'Added' : '+ Cart'}</button>
             <button onClick={() => onCompare(product)} style={{
               background: isComparing ? 'rgba(99,102,241,0.2)' : 'rgba(255,255,255,0.04)',
               color: isComparing ? '#818CF8' : '#64748B',
               border: `1px solid ${isComparing ? '#6366F1' : '#374151'}`,
               borderRadius: 10, padding: '7px 14px', fontSize: 11, fontWeight: 600,
-              cursor: 'pointer', fontFamily: 'Syne, sans-serif', whiteSpace: 'nowrap',
-            }}>{isComparing ? '✓ Comparing' : '⚖ Compare'}</button>
+              cursor: 'pointer', fontFamily: 'sans-serif', whiteSpace: 'nowrap',
+            }}>{isComparing ? 'Comparing' : 'Compare'}</button>
           </div>
         </div>
       </div>
@@ -146,7 +146,7 @@ function ProductCard({ product, onCompare, isComparing, viewMode }) {
         onMouseLeave={() => setHovered(false)}>
 
         <div style={{ position: 'absolute', top: 12, left: 12, zIndex: 2, display: 'flex', flexDirection: 'column', gap: 4 }}>
-          {product.badge && <span style={{ background: getBadgeColor(product.badge), color: '#000', fontSize: 9, fontWeight: 800, padding: '3px 8px', borderRadius: 5, textTransform: 'uppercase', fontFamily: 'Syne, sans-serif' }}>{product.badge}</span>}
+          {product.badge && <span style={{ background: getBadgeColor(product.badge), color: '#000', fontSize: 9, fontWeight: 800, padding: '3px 8px', borderRadius: 5, textTransform: 'uppercase', fontFamily: 'sans-serif' }}>{product.badge}</span>}
           {discount > 0 && <span style={{ background: 'rgba(239,68,68,0.9)', color: '#fff', fontSize: 9, fontWeight: 700, padding: '3px 8px', borderRadius: 5 }}>-{discount}%</span>}
         </div>
 
@@ -156,10 +156,15 @@ function ProductCard({ product, onCompare, isComparing, viewMode }) {
           border: `1px solid ${wished ? '#EF4444' : '#374151'}`,
           borderRadius: 8, width: 32, height: 32,
           display: 'flex', alignItems: 'center', justifyContent: 'center',
-          cursor: 'pointer', fontSize: 14,
+          cursor: 'pointer',
           transform: wished ? 'scale(1.15)' : 'scale(1)',
           transition: 'transform 0.15s, background 0.15s',
-        }}>{wished ? '❤️' : '🤍'}</button>
+          color: wished ? '#EF4444' : '#94A3B8',
+        }}>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill={wished ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/>
+          </svg>
+        </button>
 
         <button onClick={(e) => { e.stopPropagation(); onCompare(product); }} style={{
           position: 'absolute', top: 52, right: 12, zIndex: 2,
@@ -169,7 +174,10 @@ function ProductCard({ product, onCompare, isComparing, viewMode }) {
           display: 'flex', alignItems: 'center', justifyContent: 'center',
           cursor: 'pointer', fontSize: 13,
           transition: 'background 0.15s, border-color 0.15s',
-        }} title="Compare">⚖</button>
+          color: isComparing ? '#818CF8' : '#94A3B8',
+        }} title="Compare">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+        </button>
 
         <div style={{
           height: 190,
@@ -185,13 +193,15 @@ function ProductCard({ product, onCompare, isComparing, viewMode }) {
               <img src={product.image} alt={product.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
             </div>
           ) : (
-            <span style={{ filter: `drop-shadow(0 8px 24px ${catColor}44)` }}>{getCatIcon(product.category)}</span>
+            <span style={{ color: '#94A3B8', opacity: 0.5 }}>
+              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+            </span>
           )}
         </div>
 
         <div style={{ padding: 18 }}>
-          <p style={{ color: catColor, fontSize: 10, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 4, fontFamily: 'Syne, sans-serif' }}>{product.category}</p>
-          <h3 style={{ color: t.textPrimary, fontSize: 14, fontWeight: 700, marginBottom: 8, lineHeight: 1.4, fontFamily: 'Syne, sans-serif', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>{product.name}</h3>
+          <p style={{ color: catColor, fontSize: 10, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 4, fontFamily: 'sans-serif' }}>{product.category}</p>
+          <h3 style={{ color: t.textPrimary, fontSize: 14, fontWeight: 700, marginBottom: 8, lineHeight: 1.4, fontFamily: 'sans-serif', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>{product.name}</h3>
 
           <div style={{ display: 'flex', alignItems: 'center', gap: 5, marginBottom: 10 }}>
             <Stars rating={product.rating} small />
@@ -200,18 +210,18 @@ function ProductCard({ product, onCompare, isComparing, viewMode }) {
 
           {product.stock <= 5 && (
             <p style={{ color: '#F59E0B', fontSize: 10, fontWeight: 700, marginBottom: 8, display: 'flex', alignItems: 'center', gap: 4 }}>
-              <span>⚡</span> Only {product.stock} left in stock!
+              Only {product.stock} left in stock!
             </p>
           )}
 
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
             <div>
-              <div style={{ color: t.textPrimary, fontSize: 20, fontWeight: 900, fontFamily: 'Syne, sans-serif', lineHeight: 1 }}>
-                ${product.price?.toLocaleString()}
+              <div style={{ color: t.textPrimary, fontSize: 20, fontWeight: 900, fontFamily: 'sans-serif', lineHeight: 1 }}>
+                ₹{product.price?.toLocaleString()}
               </div>
               {product.originalPrice && (
                 <div style={{ color: t.textFaint, fontSize: 11, textDecoration: 'line-through' }}>
-                  ${product.originalPrice?.toLocaleString()}
+                  ₹{product.originalPrice?.toLocaleString()}
                 </div>
               )}
             </div>
@@ -219,11 +229,11 @@ function ProductCard({ product, onCompare, isComparing, viewMode }) {
               background: added ? '#10B981' : `linear-gradient(135deg, #1D4ED8, #2563EB)`,
               color: '#fff', border: 'none', borderRadius: 10,
               padding: '9px 16px', fontSize: 12, fontWeight: 700,
-              cursor: 'pointer', fontFamily: 'Syne, sans-serif',
+              cursor: 'pointer', fontFamily: 'sans-serif',
               transition: 'background 0.2s, transform 0.1s',
               transform: added ? 'scale(0.95)' : 'scale(1)',
               boxShadow: added ? 'none' : '0 4px 12px rgba(37,99,235,0.4)',
-            }}>{added ? '✓ Added' : '+ Cart'}</button>
+            }}>{added ? 'Added' : '+ Cart'}</button>
           </div>
         </div>
       </div>
@@ -244,8 +254,8 @@ function Stars({ rating, small }) {
 
 // ─── HELPERS ──────────────────────────────────────────────────────────────────
 function getCatIcon(cat) {
-  const m = { Laptops: '💻', Mobiles: '📱', Audio: '🎧', Tablets: '📟', Gaming: '🎮', 'Smart Home': '🏠', Accessories: '🔌' };
-  return m[cat] || '📦';
+  const m = { Laptops: 'L', Mobiles: 'M', Audio: 'A', Tablets: 'T', Gaming: 'G', 'Smart Home': 'S', Accessories: 'X' };
+  return m[cat] || 'P';
 }
 function getBadgeColor(badge) {
   if (badge === 'Best Seller') return '#F59E0B';
@@ -271,8 +281,8 @@ function CompareTray({ items, onRemove, onClear }) {
       animation: 'slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1)',
       backdropFilter: 'blur(16px)',
     }}>
-      <span style={{ color: '#818CF8', fontSize: 12, fontWeight: 700, fontFamily: 'Syne, sans-serif', whiteSpace: 'nowrap' }}>
-        ⚖ Comparing ({items.length}/3)
+      <span style={{ color: '#818CF8', fontSize: 12, fontWeight: 700, fontFamily: 'sans-serif', whiteSpace: 'nowrap' }}>
+        Comparing ({items.length}/3)
       </span>
       <div style={{ display: 'flex', gap: 8 }}>
         {items.map(p => (
@@ -280,7 +290,7 @@ function CompareTray({ items, onRemove, onClear }) {
             background: t.bgSubtle, border: `1px solid ${t.borderMuted}`, borderRadius: 10, padding: '6px 10px',
             display: 'flex', alignItems: 'center', gap: 6,
           }}>
-            <span style={{ color: t.textPrimary, fontSize: 11, fontWeight: 600, fontFamily: 'Syne, sans-serif', maxWidth: 100, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{p.name.split(' ').slice(0, 2).join(' ')}</span>
+            <span style={{ color: t.textPrimary, fontSize: 11, fontWeight: 600, fontFamily: 'sans-serif', maxWidth: 100, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{p.name.split(' ').slice(0, 2).join(' ')}</span>
             <button onClick={() => onRemove(p._id)} style={{ background: 'none', border: 'none', color: t.textFaint, cursor: 'pointer', fontSize: 14, padding: 0, lineHeight: 1 }}>×</button>
           </div>
         ))}
@@ -290,10 +300,10 @@ function CompareTray({ items, onRemove, onClear }) {
           background: 'linear-gradient(135deg, #6366F1, #8B5CF6)',
           color: '#fff', borderRadius: 10, padding: '9px 18px',
           fontSize: 12, fontWeight: 800, textDecoration: 'none',
-          fontFamily: 'Syne, sans-serif', whiteSpace: 'nowrap',
+          fontFamily: 'sans-serif', whiteSpace: 'nowrap',
         }}>Compare Now →</Link>
       )}
-      <button onClick={onClear} style={{ background: 'none', border: 'none', color: t.textFaint, cursor: 'pointer', fontSize: 12, fontFamily: 'Syne, sans-serif' }}>Clear</button>
+      <button onClick={onClear} style={{ background: 'none', border: 'none', color: t.textFaint, cursor: 'pointer', fontSize: 12, fontFamily: 'sans-serif' }}>Clear</button>
     </div>
   );
 }
@@ -306,7 +316,7 @@ function FilterPill({ label, onRemove }) {
       background: 'rgba(99,102,241,0.1)',
       border: '1px solid rgba(99,102,241,0.3)',
       borderRadius: 20, padding: '4px 12px',
-      color: '#A5B4FC', fontSize: 12, fontWeight: 600, fontFamily: 'Syne, sans-serif',
+      color: '#A5B4FC', fontSize: 12, fontWeight: 600, fontFamily: 'sans-serif',
     }}>
       {label}
       <button onClick={onRemove} style={{ background: 'none', border: 'none', color: '#818CF8', cursor: 'pointer', fontSize: 14, padding: 0, lineHeight: 1 }}>×</button>
@@ -420,7 +430,7 @@ export default function ProductsClient({ initialProducts = [], initialPagination
     setLoading(true);
     const params = new URLSearchParams();
     params.set('page', String(currentPage));
-    params.set('limit', '12');
+    params.set('limit', '9');
     if (currentSearch) params.set('search', currentSearch);
     if (currentCategory) params.set('category', currentCategory);
     if (currentSort) params.set('sort', currentSort);
@@ -465,7 +475,7 @@ export default function ProductsClient({ initialProducts = [], initialPagination
   // Derived active filter pills
   const filterPills = [];
   if (category) filterPills.push({ key: 'category', label: category, clear: () => handleCategory('All') });
-  if (priceRange.min || priceRange.max) filterPills.push({ key: 'price', label: `$${priceRange.min || 0}–$${priceRange.max || '∞'}`, clear: () => { setPriceRange({ min: '', max: '' }); updateURL({ page: 1 }); } });
+  if (priceRange.min || priceRange.max) filterPills.push({ key: 'price', label: `₹${priceRange.min || 0}–₹${priceRange.max || '∞'}`, clear: () => { setPriceRange({ min: '', max: '' }); updateURL({ page: 1 }); } });
   if (minRating) filterPills.push({ key: 'rating', label: `${minRating}★+`, clear: () => { setMinRating(''); updateURL({ page: 1 }); } });
 
   return (
@@ -513,13 +523,13 @@ export default function ProductsClient({ initialProducts = [], initialPagination
           <div style={{ maxWidth: 1280, margin: '0 auto' }}>
             <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', flexWrap: 'wrap', gap: 16, marginBottom: 24 }}>
               <div>
-                <p style={{ color: t.textFaint, fontSize: 12, fontWeight: 600, letterSpacing: '0.1em', textTransform: 'uppercase', fontFamily: 'Syne, sans-serif', marginBottom: 4 }}>
+                <p style={{ color: t.textFaint, fontSize: 12, fontWeight: 600, letterSpacing: '0.1em', textTransform: 'uppercase', fontFamily: 'sans-serif', marginBottom: 4 }}>
                   <Link href="/" style={{ color: t.textFaint, textDecoration: 'none' }}>Home</Link>
                   <span style={{ margin: '0 6px' }}>›</span>
                   <span style={{ color: t.textSecondary }}>Products</span>
                   {category && <><span style={{ margin: '0 6px' }}>›</span><span style={{ color: CAT_COLORS[category] || '#818CF8' }}>{category}</span></>}
                 </p>
-                <h1 style={{ color: t.textPrimary, fontSize: 32, fontWeight: 900, fontFamily: 'Syne, sans-serif', letterSpacing: '-0.02em' }}>
+                <h1 style={{ color: t.textPrimary, fontSize: 32, fontWeight: 900, fontFamily: 'sans-serif', letterSpacing: '-0.02em' }}>
                   {category || 'All Products'}
                 </h1>
                 <p style={{ color: t.textFaint, fontSize: 14, marginTop: 4 }}>
@@ -529,7 +539,9 @@ export default function ProductsClient({ initialProducts = [], initialPagination
 
               {/* Search bar */}
               <div style={{ position: 'relative', width: 320 }}>
-                <span style={{ position: 'absolute', left: 14, top: '50%', transform: 'translateY(-50%)', fontSize: 15, opacity: 0.5 }}>🔍</span>
+                <span style={{ position: 'absolute', left: 14, top: '50%', transform: 'translateY(-50%)', opacity: 0.5, display: 'flex', alignItems: 'center' }}>
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                </span>
                 <input
                   value={search}
                   onChange={e => handleSearchChange(e.target.value)}
@@ -539,7 +551,7 @@ export default function ProductsClient({ initialProducts = [], initialPagination
                     border: `1px solid ${t.borderInput}`,
                     borderRadius: 12, padding: '12px 40px 12px 40px',
                     color: t.textPrimary, fontSize: 13, outline: 'none',
-                    fontFamily: 'DM Sans, sans-serif', transition: 'border-color 0.2s, box-shadow 0.2s',
+                    fontFamily: 'sans-serif', transition: 'border-color 0.2s, box-shadow 0.2s',
                   }}
                   onFocus={e => { e.target.style.borderColor = 'rgba(99,102,241,0.5)'; e.target.style.boxShadow = '0 0 0 3px rgba(99,102,241,0.1)'; }}
                   onBlur={e => { e.target.style.borderColor = t.borderInput; e.target.style.boxShadow = 'none'; }}
@@ -560,7 +572,7 @@ export default function ProductsClient({ initialProducts = [], initialPagination
                     color: active ? color : t.textFaint,
                     borderRadius: 20, padding: '6px 16px',
                     fontSize: 12, fontWeight: 700, cursor: 'pointer',
-                    fontFamily: 'Syne, sans-serif',
+                    fontFamily: 'sans-serif',
                     boxShadow: active ? `0 0 12px ${color}22` : 'none',
                     transition: 'all 0.2s',
                   }}>{cat}</button>
@@ -582,7 +594,7 @@ export default function ProductsClient({ initialProducts = [], initialPagination
                 color: activeFilterCount > 0 ? '#818CF8' : t.textSecondary,
                 borderRadius: 10, padding: '8px 14px',
                 fontSize: 12, fontWeight: 700, cursor: 'pointer',
-                fontFamily: 'Syne, sans-serif',
+                fontFamily: 'sans-serif',
                 transition: 'background 0.35s, border-color 0.35s, color 0.35s',
               }}>
                 ⚙ Filters {activeFilterCount > 0 && `(${activeFilterCount})`}
@@ -592,7 +604,7 @@ export default function ProductsClient({ initialProducts = [], initialPagination
               {filterPills.map(p => <FilterPill key={p.key} label={p.label} onRemove={p.clear} />)}
               {filterPills.length > 0 && (
                 <button onClick={() => { setCategory(''); setPriceRange({ min: '', max: '' }); setMinRating(''); setSearch(''); setSort(''); router.push(pathname); }}
-                  style={{ color: '#EF4444', fontSize: 12, fontWeight: 600, background: 'none', border: 'none', cursor: 'pointer', fontFamily: 'Syne, sans-serif' }}>
+                  style={{ color: '#EF4444', fontSize: 12, fontWeight: 600, background: 'none', border: 'none', cursor: 'pointer', fontFamily: 'sans-serif' }}>
                   Clear all
                 </button>
               )}
@@ -605,7 +617,7 @@ export default function ProductsClient({ initialProducts = [], initialPagination
                 border: `1px solid ${t.borderInput}`,
                 color: t.textSecondary, borderRadius: 10, padding: '8px 14px',
                 fontSize: 12, fontWeight: 600, cursor: 'pointer',
-                fontFamily: 'Syne, sans-serif', outline: 'none',
+                fontFamily: 'sans-serif', outline: 'none',
               }}>
                 {SORT_OPTIONS.map(o => <option key={o.value} value={o.value} style={{ background: '#111827' }}>{o.label}</option>)}
               </select>
@@ -647,11 +659,13 @@ export default function ProductsClient({ initialProducts = [], initialPagination
                 </div>
               ) : products.length === 0 ? (
                 <div style={{ textAlign: 'center', padding: '80px 24px', background: t.bgCard, borderRadius: 20, border: `1px solid ${t.borderCard}`, transition: 'background 0.35s, border-color 0.35s' }}>
-                  <div style={{ fontSize: 64, marginBottom: 16 }}>🔍</div>
-                  <h3 style={{ color: t.textPrimary, fontSize: 20, fontWeight: 800, fontFamily: 'Syne, sans-serif', marginBottom: 8, transition: 'color 0.35s' }}>No products found</h3>
+                  <div style={{ marginBottom: 16, color: '#64748B' }}>
+                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                  </div>
+                  <h3 style={{ color: t.textPrimary, fontSize: 20, fontWeight: 800, fontFamily: 'sans-serif', marginBottom: 8, transition: 'color 0.35s' }}>No products found</h3>
                   <p style={{ color: t.textFaint, fontSize: 14, marginBottom: 24, transition: 'color 0.35s' }}>Try adjusting your filters or search terms</p>
                   <button onClick={() => { setSearch(''); setCategory(''); setSort(''); setPriceRange({ min: '', max: '' }); setMinRating(''); router.push(pathname); }}
-                    style={{ background: 'linear-gradient(135deg, #6366F1, #8B5CF6)', color: '#fff', border: 'none', borderRadius: 12, padding: '12px 24px', fontSize: 14, fontWeight: 700, cursor: 'pointer', fontFamily: 'Syne, sans-serif' }}>
+                    style={{ background: 'linear-gradient(135deg, #6366F1, #8B5CF6)', color: '#fff', border: 'none', borderRadius: 12, padding: '12px 24px', fontSize: 14, fontWeight: 700, cursor: 'pointer', fontFamily: 'sans-serif' }}>
                     Clear Filters
                   </button>
                 </div>
@@ -707,7 +721,7 @@ export default function ProductsClient({ initialProducts = [], initialPagination
           <div onClick={() => setSidebarOpen(false)} style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.7)', zIndex: 299, animation: 'overlayIn 0.2s ease' }} />
           <div style={{ position: 'fixed', top: 0, left: 0, bottom: 0, width: 300, background: t.bgSection, border: `1px solid ${t.borderMuted}`, zIndex: 300, padding: 24, overflowY: 'auto', animation: 'sidebarIn 0.25s cubic-bezier(0.16,1,0.3,1)', transition: 'background 0.35s, border-color 0.35s' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 24 }}>
-              <h3 style={{ color: t.textPrimary, fontWeight: 800, fontSize: 16, fontFamily: 'Syne, sans-serif', transition: 'color 0.35s' }}>Filters</h3>
+              <h3 style={{ color: t.textPrimary, fontWeight: 800, fontSize: 16, fontFamily: 'sans-serif', transition: 'color 0.35s' }}>Filters</h3>
               <button onClick={() => setSidebarOpen(false)} style={{ background: 'none', border: 'none', color: t.textSecondary, cursor: 'pointer', fontSize: 20 }}>×</button>
             </div>
             <FilterSidebar
@@ -730,7 +744,7 @@ function FilterSidebar({ priceRange, onPriceRange, minRating, onRating }) {
     <div style={{ display: 'flex', flexDirection: 'column', gap: 28 }}>
       {/* Price */}
       <div>
-        <h4 style={{ color: t.textPrimary, fontSize: 11, fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 14, fontFamily: 'Syne, sans-serif' }}>Price Range</h4>
+        <h4 style={{ color: t.textPrimary, fontSize: 11, fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 14, fontFamily: 'sans-serif' }}>Price Range</h4>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
           {PRICE_RANGES.map(r => {
             const active = String(r.min) === String(priceRange.min) && (r.max === 99999 ? !priceRange.max : String(r.max) === String(priceRange.max));
@@ -741,7 +755,7 @@ function FilterSidebar({ priceRange, onPriceRange, minRating, onRating }) {
                 color: active ? '#818CF8' : t.textFaint,
                 borderRadius: 10, padding: '9px 14px',
                 fontSize: 12, fontWeight: 600, cursor: 'pointer', textAlign: 'left',
-                fontFamily: 'Syne, sans-serif', transition: 'all 0.15s',
+                fontFamily: 'sans-serif', transition: 'all 0.15s',
               }}
                 onMouseEnter={e => { if (!active) { e.currentTarget.style.background = t.bgHover; e.currentTarget.style.color = t.textSecondary; } }}
                 onMouseLeave={e => { if (!active) { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = t.textFaint; } }}
@@ -753,7 +767,7 @@ function FilterSidebar({ priceRange, onPriceRange, minRating, onRating }) {
 
       {/* Rating */}
       <div>
-        <h4 style={{ color: t.textPrimary, fontSize: 11, fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 14, fontFamily: 'Syne, sans-serif', transition: 'color 0.35s' }}>Min. Rating</h4>
+        <h4 style={{ color: t.textPrimary, fontSize: 11, fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 14, fontFamily: 'sans-serif', transition: 'color 0.35s' }}>Min. Rating</h4>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
           {[4.5, 4, 3.5, 3].map(r => (
             <button key={r} onClick={() => onRating(minRating === String(r) ? '' : String(r))} style={{
@@ -762,7 +776,7 @@ function FilterSidebar({ priceRange, onPriceRange, minRating, onRating }) {
               color: minRating === String(r) ? '#FBBF24' : t.textFaint,
               borderRadius: 10, padding: '9px 14px',
               fontSize: 12, fontWeight: 600, cursor: 'pointer', textAlign: 'left',
-              fontFamily: 'Syne, sans-serif', transition: 'all 0.15s',
+              fontFamily: 'sans-serif', transition: 'all 0.15s',
               display: 'flex', alignItems: 'center', gap: 6,
             }}>
               <span style={{ color: '#FBBF24' }}>{'★'.repeat(Math.floor(r))}</span>
@@ -774,18 +788,18 @@ function FilterSidebar({ priceRange, onPriceRange, minRating, onRating }) {
 
       {/* In Stock */}
       <div>
-        <h4 style={{ color: t.textPrimary, fontSize: 11, fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 14, fontFamily: 'Syne, sans-serif', transition: 'color 0.35s' }}>Availability</h4>
+        <h4 style={{ color: t.textPrimary, fontSize: 11, fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 14, fontFamily: 'sans-serif', transition: 'color 0.35s' }}>Availability</h4>
         <label style={{ display: 'flex', alignItems: 'center', gap: 10, cursor: 'pointer' }}>
           <input type="checkbox" style={{ accentColor: '#6366F1', width: 14, height: 14 }} />
-          <span style={{ color: t.textSecondary, fontSize: 13, fontFamily: 'DM Sans, sans-serif', transition: 'color 0.35s' }}>In Stock Only</span>
+          <span style={{ color: t.textSecondary, fontSize: 13, fontFamily: 'sans-serif', transition: 'color 0.35s' }}>In Stock Only</span>
         </label>
         <label style={{ display: 'flex', alignItems: 'center', gap: 10, cursor: 'pointer', marginTop: 8 }}>
           <input type="checkbox" style={{ accentColor: '#6366F1', width: 14, height: 14 }} />
-          <span style={{ color: t.textSecondary, fontSize: 13, fontFamily: 'DM Sans, sans-serif', transition: 'color 0.35s' }}>On Sale</span>
+          <span style={{ color: t.textSecondary, fontSize: 13, fontFamily: 'sans-serif', transition: 'color 0.35s' }}>On Sale</span>
         </label>
         <label style={{ display: 'flex', alignItems: 'center', gap: 10, cursor: 'pointer', marginTop: 8 }}>
           <input type="checkbox" style={{ accentColor: '#6366F1', width: 14, height: 14 }} />
-          <span style={{ color: t.textSecondary, fontSize: 13, fontFamily: 'DM Sans, sans-serif', transition: 'color 0.35s' }}>Certified Refurbished</span>
+          <span style={{ color: t.textSecondary, fontSize: 13, fontFamily: 'sans-serif', transition: 'color 0.35s' }}>Certified Refurbished</span>
         </label>
       </div>
     </div>
@@ -800,7 +814,7 @@ function paginationBtnStyle(active, disabled, t) {
     color: active ? '#fff' : disabled ? t.textVeryFaint : t.textSecondary,
     borderRadius: 10, padding: '9px 16px',
     fontSize: 13, fontWeight: 700, cursor: disabled ? 'default' : 'pointer',
-    fontFamily: 'Syne, sans-serif',
+    fontFamily: 'sans-serif',
     boxShadow: active ? '0 4px 12px rgba(99,102,241,0.4)' : 'none',
     transition: 'all 0.15s, background 0.35s, color 0.35s, border-color 0.35s',
     opacity: disabled ? 0.4 : 1,

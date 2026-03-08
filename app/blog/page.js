@@ -11,7 +11,7 @@ export default async function BlogPage({ searchParams }) {
   if (page < 1) {
     return (
       <div style={{ padding: '40px', maxWidth: '800px', margin: '0 auto', background: 'var(--bg-primary)', minHeight: '100vh', color: 'var(--text-primary)' }}>
-        <h1 style={{ fontFamily: 'Syne, sans-serif' }}>Invalid Page</h1>
+        <h1 style={{ fontFamily: 'sans-serif' }}>Invalid Page</h1>
         <p style={{ color: 'var(--text-secondary)', marginTop: 8 }}>Page number must be positive.</p>
         <Link href="/blog?page=1" style={{ color: 'var(--accent)', marginTop: 16, display: 'inline-block' }}>Go to page 1</Link>
       </div>
@@ -26,7 +26,7 @@ export default async function BlogPage({ searchParams }) {
   if (page > totalPages && totalPages > 0) {
     return (
       <div style={{ padding: '40px', maxWidth: '800px', margin: '0 auto', background: 'var(--bg-primary)', minHeight: '100vh', color: 'var(--text-primary)' }}>
-        <h1 style={{ fontFamily: 'Syne, sans-serif' }}>Page Not Found</h1>
+        <h1 style={{ fontFamily: 'sans-serif' }}>Page Not Found</h1>
         <p style={{ color: 'var(--text-secondary)', marginTop: 8 }}>This page does not exist.</p>
         <Link href={`/blog?page=${totalPages}`} style={{ color: 'var(--accent)', marginTop: 16, display: 'inline-block' }}>Go to last page</Link>
       </div>
@@ -40,12 +40,12 @@ export default async function BlogPage({ searchParams }) {
     .lean();
 
   return (
-    <div style={{ padding: '40px', maxWidth: '800px', margin: '0 auto', background: 'var(--bg-primary)', minHeight: '100vh', color: 'var(--text-primary)', fontFamily: "'DM Sans', sans-serif" }}>
+    <div style={{ padding: '40px', maxWidth: '800px', margin: '0 auto', background: 'var(--bg-primary)', minHeight: '100vh', color: 'var(--text-primary)', fontFamily: 'sans-serif' }}>
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800;900&family=DM+Sans:wght@400;500;600&display=swap');
       `}</style>
 
-      <h1 style={{ fontFamily: 'Syne, sans-serif', fontWeight: 900, fontSize: 32, color: 'var(--text-primary)', marginBottom: 8 }}>Blog Posts</h1>
+      <h1 style={{ fontFamily: 'sans-serif', fontWeight: 900, fontSize: 32, color: 'var(--text-primary)', marginBottom: 8 }}>Blog Posts</h1>
       <p style={{ color: 'var(--text-secondary)', fontSize: 14, marginBottom: 32 }}>Total Posts: {totalPosts}</p>
 
       <div style={{ marginTop: '30px', display: 'flex', flexDirection: 'column', gap: 16 }}>
@@ -59,7 +59,7 @@ export default async function BlogPage({ searchParams }) {
               borderRadius: 16,
             }}
           >
-            <h2 style={{ color: 'var(--text-primary)', fontSize: 18, fontWeight: 700, fontFamily: 'Syne, sans-serif', marginBottom: 8 }}>{post.title}</h2>
+            <h2 style={{ color: 'var(--text-primary)', fontSize: 18, fontWeight: 700, fontFamily: 'sans-serif', marginBottom: 8 }}>{post.title}</h2>
             <p style={{ color: 'var(--text-secondary)', fontSize: 14, lineHeight: 1.7 }}>{post.content}</p>
             <small style={{ color: 'var(--text-muted)', fontSize: 12, marginTop: 10, display: 'block' }}>
               Posted: {new Date(post.createdAt).toLocaleDateString()}
@@ -79,7 +79,7 @@ export default async function BlogPage({ searchParams }) {
               borderRadius: 10,
               color: 'var(--text-secondary)',
               textDecoration: 'none',
-              fontFamily: 'Syne, sans-serif',
+              fontFamily: 'sans-serif',
               fontSize: 13,
               fontWeight: 700,
               background: 'var(--bg-input)',
@@ -100,7 +100,7 @@ export default async function BlogPage({ searchParams }) {
               background: pageNum === page ? 'linear-gradient(135deg, #6366F1, #8B5CF6)' : 'var(--bg-input)',
               color: pageNum === page ? '#fff' : 'var(--text-secondary)',
               textDecoration: 'none',
-              fontFamily: 'Syne, sans-serif',
+              fontFamily: 'sans-serif',
               fontSize: 13,
               fontWeight: 700,
               boxShadow: pageNum === page ? '0 4px 12px rgba(99,102,241,0.35)' : 'none',
@@ -119,7 +119,7 @@ export default async function BlogPage({ searchParams }) {
               borderRadius: 10,
               color: 'var(--text-secondary)',
               textDecoration: 'none',
-              fontFamily: 'Syne, sans-serif',
+              fontFamily: 'sans-serif',
               fontSize: 13,
               fontWeight: 700,
               background: 'var(--bg-input)',
@@ -133,7 +133,7 @@ export default async function BlogPage({ searchParams }) {
       <div style={{ marginTop: '32px' }}>
         <Link
           href="/dashboard"
-          style={{ color: 'var(--accent)', fontSize: 13, fontWeight: 600, textDecoration: 'none', fontFamily: 'Syne, sans-serif' }}
+          style={{ color: 'var(--accent)', fontSize: 13, fontWeight: 600, textDecoration: 'none', fontFamily: 'sans-serif' }}
         >
           ← Back to Dashboard
         </Link>

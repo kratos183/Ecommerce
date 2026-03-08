@@ -14,7 +14,7 @@ export default function DashboardPage() {
 
   return (
     <div style={{ padding: '40px', maxWidth: '800px', margin: '0 auto', background: t.bgPage, minHeight: '100vh', transition: 'background 0.35s, color 0.35s' }}>
-      <h1 style={{ color: t.textPrimary, fontSize: 28, fontWeight: 900, fontFamily: 'Syne,sans-serif', marginBottom: 8, transition: 'color 0.35s' }}>Dashboard</h1>
+      <h1 style={{ color: t.textPrimary, fontSize: 28, fontWeight: 900, fontFamily: 'sans-serif', marginBottom: 8, transition: 'color 0.35s' }}>Dashboard</h1>
       <p style={{ color: t.textSecondary, fontSize: 14, marginBottom: 24, transition: 'color 0.35s' }}>Welcome to your dashboard. You are logged in!</p>
       <div style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
         <a href="/blog" style={{ color: t.textLink, fontSize: 14, fontWeight: 600, transition: 'color 0.35s' }}>View Blog</a>

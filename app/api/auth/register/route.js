@@ -32,7 +32,7 @@ export async function POST(request) {
     const hashedPassword = await hashPassword(password);
     const user = await User.create({ name, email, password: hashedPassword });
 
-    const token = generateToken({ userId: user._id, role: user.role });
+    const token = await generateToken({ userId: user._id, role: user.role });
 
     const response = Response.json({ 
       message: 'Registration successful',
@@ -43,6 +43,7 @@ export async function POST(request) {
 
     return response;
   } catch (error) {
-    return Response.json({ error: 'Registration failed' }, { status: 500 });
+    console.error('Registration error:', error);
+    return Response.json({ error: 'Registration failed', details: error.message }, { status: 500 });
   }
 }

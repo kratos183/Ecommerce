@@ -13,42 +13,42 @@ const NAV_LINKS = [
     categories: [
       {
         name: 'Laptops',
-        icon: '💻',
+        icon: 'L',
         color: '#00D4FF',
         items: ['Gaming Laptops', 'Ultrabooks', 'MacBooks', 'Workstations'],
         badge: 'New Arrivals',
       },
       {
         name: 'Mobiles',
-        icon: '📱',
+        icon: 'M',
         color: '#FF6B35',
         items: ['Flagship Phones', 'Mid-Range', 'Foldables', 'Accessories'],
         badge: 'Hot',
       },
       {
         name: 'Audio',
-        icon: '🎧',
+        icon: 'A',
         color: '#A855F7',
         items: ['Headphones', 'Earbuds', 'Speakers', 'DACs & Amps'],
         badge: null,
       },
       {
         name: 'Tablets',
-        icon: '📟',
+        icon: 'T',
         color: '#10B981',
         items: ['iPad Series', 'Android Tabs', 'Drawing Tablets', 'Kids Tablets'],
         badge: null,
       },
       {
         name: 'Gaming',
-        icon: '🎮',
+        icon: 'G',
         color: '#F59E0B',
         items: ['Controllers', 'Monitors', 'Keyboards', 'Gaming Chairs'],
-        badge: '🔥 Trending',
+        badge: 'Trending',
       },
       {
         name: 'Smart Home',
-        icon: '🏠',
+        icon: 'S',
         color: '#EC4899',
         items: ['Smart Displays', 'Security Cams', 'Smart Lighting', 'Hubs'],
         badge: null,
@@ -68,14 +68,14 @@ const NAV_LINKS = [
 ];
 
 const MOCK_SEARCH_RESULTS = [
-  { name: 'MacBook Pro 16" M3 Max', price: '$2,499', category: 'Laptops', icon: '💻' },
-  { name: 'iPhone 15 Pro Max 256GB', price: '$1,199', category: 'Mobiles', icon: '📱' },
-  { name: 'Sony WH-1000XM5', price: '$349', category: 'Audio', icon: '🎧' },
-  { name: 'Samsung Galaxy S24 Ultra', price: '$1,099', category: 'Mobiles', icon: '📱' },
-  { name: 'iPad Pro 12.9" M2', price: '$1,099', category: 'Tablets', icon: '📟' },
-  { name: 'ASUS ROG Swift 27" 360Hz', price: '$599', category: 'Gaming', icon: '🖥️' },
-  { name: 'Dell XPS 15 OLED', price: '$1,799', category: 'Laptops', icon: '💻' },
-  { name: 'AirPods Pro 2nd Gen', price: '$249', category: 'Audio', icon: '🎧' },
+  { name: 'MacBook Pro 16" M3 Max', price: '₹2,499', category: 'Laptops', icon: 'L' },
+  { name: 'iPhone 15 Pro Max 256GB', price: '₹1,199', category: 'Mobiles', icon: 'M' },
+  { name: 'Sony WH-1000XM5', price: '₹349', category: 'Audio', icon: 'A' },
+  { name: 'Samsung Galaxy S24 Ultra', price: '₹1,099', category: 'Mobiles', icon: 'M' },
+  { name: 'iPad Pro 12.9" M2', price: '₹1,099', category: 'Tablets', icon: 'T' },
+  { name: 'ASUS ROG Swift 27" 360Hz', price: '₹599', category: 'Gaming', icon: 'G' },
+  { name: 'Dell XPS 15 OLED', price: '₹1,799', category: 'Laptops', icon: 'L' },
+  { name: 'AirPods Pro 2nd Gen', price: '₹249', category: 'Audio', icon: 'A' },
 ];
 
 // ─── THEME TOGGLE BUTTON ──────────────────────────────────────────────────────
@@ -118,10 +118,12 @@ function ThemeToggleBtn({ compact = false }) {
       {compact ? (
         // Mobile: show label + icon
         <>
-          <span style={{ fontSize: 16 }}>{isDark ? '☀️' : '🌙'}</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ color: isDark ? '#FBBF24' : '#6366F1' }}>
+            {isDark ? <><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></> : <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/>}
+          </svg>
           <span style={{
             color: isDark ? '#CBD5E1' : '#4338CA',
-            fontSize: 13, fontWeight: 600, fontFamily: 'Syne, sans-serif',
+            fontSize: 13, fontWeight: 600, fontFamily: 'sans-serif',
           }}>
             {isDark ? 'Light Mode' : 'Dark Mode'}
           </span>
@@ -140,25 +142,28 @@ function ThemeToggleBtn({ compact = false }) {
             transition: 'transform 0.3s cubic-bezier(0.34,1.56,0.64,1), background 0.3s',
             display: 'flex', alignItems: 'center', justifyContent: 'center',
             fontSize: 11,
+            color: '#fff',
           }}
           >
-            {isDark ? '🌙' : '☀️'}
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              {isDark ? <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/> : <><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></>}
+            </svg>
           </span>
           {/* Labels */}
           <span style={{
-            position: 'absolute', left: 8,
-            fontSize: 9, fontWeight: 800, color: isDark ? '#64748B' : '#F9FAFB',
-            fontFamily: 'Syne, sans-serif', letterSpacing: '0.05em',
+            position: 'absolute', left: 7,
+            fontSize: 8, fontWeight: 800, color: isDark ? '#64748B' : '#F9FAFB',
+            fontFamily: 'sans-serif', letterSpacing: '0.05em',
             transition: 'color 0.3s', userSelect: 'none',
             opacity: isDark ? 0.5 : 1,
-          }}>☀</span>
+          }}>D</span>
           <span style={{
-            position: 'absolute', right: 8,
-            fontSize: 9, fontWeight: 800, color: isDark ? '#F9FAFB' : '#64748B',
-            fontFamily: 'Syne, sans-serif', letterSpacing: '0.05em',
+            position: 'absolute', right: 7,
+            fontSize: 8, fontWeight: 800, color: isDark ? '#F9FAFB' : '#64748B',
+            fontFamily: 'sans-serif', letterSpacing: '0.05em',
             transition: 'color 0.3s', userSelect: 'none',
             opacity: isDark ? 1 : 0.5,
-          }}>🌙</span>
+          }}>N</span>
         </>
       )}
     </button>
@@ -215,7 +220,7 @@ function SearchBar({ compact = false, onClose, isDark = true }) {
         boxShadow: focused ? '0 0 0 3px rgba(99,102,241,0.15)' : 'none',
         width: compact ? '100%' : 280,
       }}>
-        <span style={{ fontSize: 14, opacity: 0.6 }}>🔍</span>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ opacity: 0.6 }}><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
         <input
           ref={inputRef}
           value={query}
@@ -240,7 +245,7 @@ function SearchBar({ compact = false, onClose, isDark = true }) {
             fontSize: 13,
             padding: '10px 0',
             width: '100%',
-            fontFamily: 'DM Sans, sans-serif',
+            fontFamily: 'sans-serif',
             transition: 'color 0.35s',
           }}
         />
@@ -250,11 +255,12 @@ function SearchBar({ compact = false, onClose, isDark = true }) {
         )}
         <button title="Voice search" style={{
           background: 'none', border: 'none', cursor: 'pointer',
-          fontSize: 14, opacity: 0.5, padding: 0, transition: 'opacity 0.2s',
+          opacity: 0.5, padding: 0, transition: 'opacity 0.2s',
+          display: 'flex', alignItems: 'center',
         }}
           onMouseEnter={e => e.currentTarget.style.opacity = '1'}
           onMouseLeave={e => e.currentTarget.style.opacity = '0.5'}
-        >🎙️</button>
+        ><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 1a3 3 0 00-3 3v8a3 3 0 006 0V4a3 3 0 00-3-3z"/><path d="M19 10v2a7 7 0 01-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg></button>
       </div>
 
       {showDropdown && (
@@ -275,7 +281,7 @@ function SearchBar({ compact = false, onClose, isDark = true }) {
           {results.length > 0 ? (
             <>
               <div style={{ padding: '8px 14px 4px', borderBottom: `1px solid ${dropBorder}` }}>
-                <span style={{ color: subText, fontSize: 11, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', fontFamily: 'Syne, sans-serif' }}>
+                <span style={{ color: subText, fontSize: 11, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', fontFamily: 'sans-serif' }}>
                   Top Results
                 </span>
               </div>
@@ -298,18 +304,19 @@ function SearchBar({ compact = false, onClose, isDark = true }) {
                     background: iconBg,
                     borderRadius: 8,
                     display: 'flex', alignItems: 'center', justifyContent: 'center',
-                    fontSize: 18, flexShrink: 0,
+                    fontSize: 14, fontWeight: 800, flexShrink: 0,
+                    color: textColor, fontFamily: 'sans-serif',
                   }}>{r.icon}</div>
                   <div style={{ flex: 1, minWidth: 0 }}>
-                    <p style={{ color: textColor, fontSize: 13, fontWeight: 600, margin: 0, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', fontFamily: 'Syne, sans-serif' }}>{r.name}</p>
+                    <p style={{ color: textColor, fontSize: 13, fontWeight: 600, margin: 0, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', fontFamily: 'sans-serif' }}>{r.name}</p>
                     <p style={{ color: subText, fontSize: 11, margin: 0 }}>{r.category}</p>
                   </div>
-                  <span style={{ color: '#10B981', fontSize: 13, fontWeight: 700, fontFamily: 'Syne, sans-serif', flexShrink: 0 }}>{r.price}</span>
+                  <span style={{ color: '#10B981', fontSize: 13, fontWeight: 700, fontFamily: 'sans-serif', flexShrink: 0 }}>{r.price}</span>
                 </Link>
               ))}
               <div style={{ padding: '10px 14px', borderTop: `1px solid ${dropBorder}` }}>
                 <Link href={`/products?q=${encodeURIComponent(query)}`}
-                  style={{ color: '#6366F1', fontSize: 12, fontWeight: 700, fontFamily: 'Syne, sans-serif', textDecoration: 'none' }}>
+                  style={{ color: '#6366F1', fontSize: 12, fontWeight: 700, fontFamily: 'sans-serif', textDecoration: 'none' }}>
                   View all results for "{query}" →
                 </Link>
               </div>
@@ -390,12 +397,16 @@ function MegaMenu({ navItem, onClose, isDark = true }) {
               border: `1px solid ${cat.color}33`,
               borderRadius: 10,
               display: 'flex', alignItems: 'center', justifyContent: 'center',
-              fontSize: 20, flexShrink: 0,
+              flexShrink: 0,
               transition: 'box-shadow 0.2s',
-            }}>{cat.icon}</div>
+            }}>
+              <span style={{ fontSize: 16, fontWeight: 900, flexShrink: 0,
+                transition: 'box-shadow 0.2s', color: cat.color, fontFamily: 'sans-serif',
+              }}>{cat.icon}</span>
+            </div>
             <div>
               <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 3 }}>
-                <span style={{ color: catText, fontSize: 13, fontWeight: 700, fontFamily: 'Syne, sans-serif' }}>{cat.name}</span>
+                <span style={{ color: catText, fontSize: 13, fontWeight: 700, fontFamily: 'sans-serif' }}>{cat.name}</span>
                 {cat.badge && (
                   <span style={{
                     background: cat.color + '22',
@@ -406,7 +417,7 @@ function MegaMenu({ navItem, onClose, isDark = true }) {
                     borderRadius: 4,
                     letterSpacing: '0.06em',
                     textTransform: 'uppercase',
-                    fontFamily: 'Syne, sans-serif',
+                    fontFamily: 'sans-serif',
                   }}>{cat.badge}</span>
                 )}
               </div>
@@ -426,8 +437,8 @@ function MegaMenu({ navItem, onClose, isDark = true }) {
           borderRadius: 14,
           padding: 20,
         }}>
-          <span style={{ fontSize: 28 }}>🔬</span>
-          <h4 style={{ color: catText, fontSize: 14, fontWeight: 800, marginTop: 10, marginBottom: 6, fontFamily: 'Syne, sans-serif' }}>
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#818CF8" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+          <h4 style={{ color: catText, fontSize: 14, fontWeight: 800, marginTop: 10, marginBottom: 6, fontFamily: 'sans-serif' }}>
             {navItem.featured.title}
           </h4>
           <p style={{ color: featText, fontSize: 12, lineHeight: 1.5, marginBottom: 16 }}>
@@ -442,7 +453,7 @@ function MegaMenu({ navItem, onClose, isDark = true }) {
             padding: '8px 16px',
             borderRadius: 8,
             textDecoration: 'none',
-            fontFamily: 'Syne, sans-serif',
+            fontFamily: 'sans-serif',
           }}>{navItem.featured.cta}</Link>
         </div>
 
@@ -457,9 +468,9 @@ function MegaMenu({ navItem, onClose, isDark = true }) {
             borderRadius: 10,
             textDecoration: 'none',
           }}>
-            <span>⚡</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#F59E0B" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
             <div>
-              <p style={{ color: '#F59E0B', fontSize: 12, fontWeight: 700, margin: 0, fontFamily: 'Syne, sans-serif' }}>Today's Deals</p>
+              <p style={{ color: '#F59E0B', fontSize: 12, fontWeight: 700, margin: 0, fontFamily: 'sans-serif' }}>Today's Deals</p>
               <p style={{ color: '#78716C', fontSize: 11, margin: 0 }}>Up to 40% off</p>
             </div>
           </Link>
@@ -548,7 +559,7 @@ export default function Navbar({ user }) {
         WebkitBackdropFilter: 'blur(20px)',
         borderBottom: `1px solid ${navBorder}`,
         transition: 'all 0.3s ease',
-        fontFamily: 'DM Sans, sans-serif',
+        fontFamily: 'sans-serif',
         boxShadow: scrolled ? (isDark ? '0 8px 32px rgba(0,0,0,0.4)' : '0 4px 24px rgba(99,102,241,0.12)') : 'none',
       }}>
         <div ref={megaRef} style={{
@@ -565,7 +576,7 @@ export default function Navbar({ user }) {
 
           {/* Logo */}
           <Link href="/" style={{
-            fontFamily: 'Syne, sans-serif',
+            fontFamily: 'sans-serif',
             fontWeight: 800,
             fontSize: scrolled ? 18 : 20,
             color: logoColor,
@@ -593,7 +604,7 @@ export default function Navbar({ user }) {
                   textDecoration: 'none',
                   transition: 'color 0.15s, background 0.15s',
                   background: activeMega === link.label ? 'rgba(99,102,241,0.1)' : 'transparent',
-                  fontFamily: 'Syne, sans-serif',
+                  fontFamily: 'sans-serif',
                 }}
                   onMouseEnter={e => { if (!link.mega) e.currentTarget.style.background = isDark ? 'rgba(255,255,255,0.06)' : 'rgba(99,102,241,0.07)'; }}
                   onMouseLeave={e => { if (!link.mega) e.currentTarget.style.background = 'transparent'; }}
@@ -648,7 +659,7 @@ export default function Navbar({ user }) {
               }}
                 onMouseEnter={e => e.currentTarget.style.background = isDark ? 'rgba(255,255,255,0.1)' : 'rgba(99,102,241,0.14)'}
                 onMouseLeave={e => e.currentTarget.style.background = iconBg}
-              >🔍</button>
+              ><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></button>
             ) : (
               <SearchBar isDark={isDark} />
             )}
@@ -673,7 +684,7 @@ export default function Navbar({ user }) {
                   e.currentTarget.style.background = iconBg;
                   e.currentTarget.style.borderColor = iconBorder;
                 }}>
-                🛒
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6"/></svg>
                 {cartCount > 0 && (
                   <span style={{
                     position: 'absolute', top: -4, right: -4,
@@ -684,7 +695,7 @@ export default function Navbar({ user }) {
                     width: 16, height: 16,
                     borderRadius: '50%',
                     display: 'flex', alignItems: 'center', justifyContent: 'center',
-                    fontFamily: 'Syne, sans-serif',
+                    fontFamily: 'sans-serif',
                   }}>{cartCount}</span>
                 )}
               </Link>
@@ -702,14 +713,14 @@ export default function Navbar({ user }) {
               fontWeight: 800,
               fontSize: 12,
               textDecoration: 'none',
-              fontFamily: 'Syne, sans-serif',
+              fontFamily: 'sans-serif',
               letterSpacing: '0.02em',
               boxShadow: '0 4px 12px rgba(239,68,68,0.3)',
               transition: 'opacity 0.2s, transform 0.15s',
             }}
               onMouseEnter={e => { e.currentTarget.style.opacity = '0.9'; e.currentTarget.style.transform = 'translateY(-1px)'; }}
               onMouseLeave={e => { e.currentTarget.style.opacity = '1'; e.currentTarget.style.transform = 'translateY(0)'; }}
-            >⚡ Deals</Link>
+            >Deals</Link>
 
             {/* Auth */}
             {user ? (
@@ -723,12 +734,12 @@ export default function Navbar({ user }) {
                   fontSize: 12,
                   fontWeight: 600,
                   textDecoration: 'none',
-                  fontFamily: 'Syne, sans-serif',
+                  fontFamily: 'sans-serif',
                   transition: 'background 0.2s, color 0.35s',
                 }}
                   onMouseEnter={e => e.currentTarget.style.background = isDark ? 'rgba(255,255,255,0.1)' : 'rgba(99,102,241,0.14)'}
                   onMouseLeave={e => e.currentTarget.style.background = iconBg}
-                >{user.role === 'admin' ? '⚙️ Admin' : '👤 Account'}</Link>
+                >{user.role === 'admin' ? 'Admin' : 'Account'}</Link>
                 <button onClick={handleLogout} style={{
                   background: 'transparent',
                   border: `1px solid ${iconBorder}`,
@@ -738,7 +749,7 @@ export default function Navbar({ user }) {
                   fontSize: 12,
                   fontWeight: 600,
                   cursor: 'pointer',
-                  fontFamily: 'DM Sans, sans-serif',
+                  fontFamily: 'sans-serif',
                   transition: 'color 0.2s, border-color 0.2s',
                 }}
                   onMouseEnter={e => { e.currentTarget.style.color = isDark ? '#F9FAFB' : '#1E1B4B'; e.currentTarget.style.borderColor = isDark ? 'rgba(255,255,255,0.2)' : 'rgba(99,102,241,0.3)'; }}
@@ -750,7 +761,7 @@ export default function Navbar({ user }) {
                 <Link href="/login" style={{
                   color: linkColor, fontSize: 13, fontWeight: 600,
                   textDecoration: 'none', padding: '7px 12px',
-                  fontFamily: 'Syne, sans-serif',
+                  fontFamily: 'sans-serif',
                   transition: 'color 0.2s',
                 }}
                   onMouseEnter={e => e.currentTarget.style.color = logoColor}
@@ -764,7 +775,7 @@ export default function Navbar({ user }) {
                   fontWeight: 700,
                   fontSize: 13,
                   textDecoration: 'none',
-                  fontFamily: 'Syne, sans-serif',
+                  fontFamily: 'sans-serif',
                   boxShadow: '0 4px 12px rgba(99,102,241,0.35)',
                   transition: 'opacity 0.2s',
                 }}
@@ -779,7 +790,7 @@ export default function Navbar({ user }) {
           <div style={{ display: 'flex', alignItems: 'center', gap: 10 }} className="show-mobile">
             {user && (
               <Link href="/cart" style={{ position: 'relative', fontSize: 20, textDecoration: 'none' }}>
-                🛒
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6"/></svg>
                 {cartCount > 0 && (
                   <span style={{
                     position: 'absolute', top: -4, right: -4,
@@ -787,7 +798,7 @@ export default function Navbar({ user }) {
                     fontSize: 9, fontWeight: 800,
                     width: 15, height: 15, borderRadius: '50%',
                     display: 'flex', alignItems: 'center', justifyContent: 'center',
-                    fontFamily: 'Syne, sans-serif',
+                    fontFamily: 'sans-serif',
                   }}>{cartCount}</span>
                 )}
               </Link>
@@ -828,7 +839,7 @@ export default function Navbar({ user }) {
                   color: isActive(link.href) ? '#818CF8' : mobileLinkColor,
                   padding: '11px 14px', borderRadius: 10,
                   fontWeight: 600, fontSize: 14, textDecoration: 'none',
-                  fontFamily: 'Syne, sans-serif',
+                  fontFamily: 'sans-serif',
                   background: isActive(link.href) ? 'rgba(99,102,241,0.1)' : 'transparent',
                   display: 'flex', alignItems: 'center', justifyContent: 'space-between',
                 }}>
@@ -836,22 +847,22 @@ export default function Navbar({ user }) {
                   {link.label === 'Deals' && <span style={{ background: '#EF4444', color: '#fff', fontSize: 9, fontWeight: 800, padding: '2px 6px', borderRadius: 4 }}>HOT</span>}
                 </Link>
               ))}
-              {user && <Link href="/cart" onClick={() => setMobileMenuOpen(false)} style={{ color: mobileLinkColor, padding: '11px 14px', borderRadius: 10, fontWeight: 600, fontSize: 14, textDecoration: 'none', fontFamily: 'Syne, sans-serif' }}>🛒 Cart ({cartCount})</Link>}
+              {user && <Link href="/cart" onClick={() => setMobileMenuOpen(false)} style={{ color: mobileLinkColor, padding: '11px 14px', borderRadius: 10, fontWeight: 600, fontSize: 14, textDecoration: 'none', fontFamily: 'sans-serif' }}>Cart ({cartCount})</Link>}
               <div style={{ height: 1, background: mobileDivider, margin: '8px 0' }} />
               {/* Theme toggle in mobile menu */}
               <ThemeToggleBtn compact />
               <div style={{ height: 1, background: mobileDivider, margin: '8px 0' }} />
               {user ? (
                 <>
-                  <Link href={user.role === 'admin' ? '/admin' : '/dashboard/user'} onClick={() => setMobileMenuOpen(false)} style={{ color: mobileLinkColor, padding: '11px 14px', borderRadius: 10, fontWeight: 600, fontSize: 14, textDecoration: 'none', fontFamily: 'Syne, sans-serif' }}>
-                    {user.role === 'admin' ? '⚙️ Admin Panel' : '👤 My Account'}
+                  <Link href={user.role === 'admin' ? '/admin' : '/dashboard/user'} onClick={() => setMobileMenuOpen(false)} style={{ color: mobileLinkColor, padding: '11px 14px', borderRadius: 10, fontWeight: 600, fontSize: 14, textDecoration: 'none', fontFamily: 'sans-serif' }}>
+                    {user.role === 'admin' ? 'Admin Panel' : 'My Account'}
                   </Link>
-                  <button onClick={handleLogout} style={{ color: '#94A3B8', padding: '11px 14px', borderRadius: 10, fontWeight: 600, fontSize: 14, background: 'none', border: 'none', cursor: 'pointer', textAlign: 'left', fontFamily: 'Syne, sans-serif' }}>Logout</button>
+                  <button onClick={handleLogout} style={{ color: '#94A3B8', padding: '11px 14px', borderRadius: 10, fontWeight: 600, fontSize: 14, background: 'none', border: 'none', cursor: 'pointer', textAlign: 'left', fontFamily: 'sans-serif' }}>Logout</button>
                 </>
               ) : (
                 <div style={{ display: 'flex', gap: 10, marginTop: 4 }}>
-                  <Link href="/login" onClick={() => setMobileMenuOpen(false)} style={{ flex: 1, textAlign: 'center', background: iconBg, border: `1px solid ${iconBorder}`, color: mobileLinkColor, padding: '11px', borderRadius: 10, fontWeight: 700, fontSize: 14, textDecoration: 'none', fontFamily: 'Syne, sans-serif' }}>Login</Link>
-                  <Link href="/register" onClick={() => setMobileMenuOpen(false)} style={{ flex: 1, textAlign: 'center', background: 'linear-gradient(135deg, #6366F1, #8B5CF6)', color: '#fff', padding: '11px', borderRadius: 10, fontWeight: 700, fontSize: 14, textDecoration: 'none', fontFamily: 'Syne, sans-serif' }}>Sign Up</Link>
+                  <Link href="/login" onClick={() => setMobileMenuOpen(false)} style={{ flex: 1, textAlign: 'center', background: iconBg, border: `1px solid ${iconBorder}`, color: mobileLinkColor, padding: '11px', borderRadius: 10, fontWeight: 700, fontSize: 14, textDecoration: 'none', fontFamily: 'sans-serif' }}>Login</Link>
+                  <Link href="/register" onClick={() => setMobileMenuOpen(false)} style={{ flex: 1, textAlign: 'center', background: 'linear-gradient(135deg, #6366F1, #8B5CF6)', color: '#fff', padding: '11px', borderRadius: 10, fontWeight: 700, fontSize: 14, textDecoration: 'none', fontFamily: 'sans-serif' }}>Sign Up</Link>
                 </div>
               )}
             </div>
@@ -872,10 +883,10 @@ export default function Navbar({ user }) {
         transition: 'background 0.35s, border-color 0.35s',
       }} className="bottom-nav">
         {[
-          { icon: '🏠', label: 'Home', href: '/' },
-          { icon: '🔍', label: 'Search', href: '/products' },
-          { icon: '🛒', label: 'Cart', href: '/cart', badge: cartCount },
-          { icon: user ? '👤' : '🔑', label: user ? 'Account' : 'Login', href: user ? (user.role === 'admin' ? '/admin' : '/dashboard/user') : '/login' },
+          { icon: <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>, label: 'Home', href: '/' },
+          { icon: <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>, label: 'Search', href: '/products' },
+          { icon: <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6"/></svg>, label: 'Cart', href: '/cart', badge: cartCount },
+          { icon: <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>, label: user ? 'Account' : 'Login', href: user ? (user.role === 'admin' ? '/admin' : '/dashboard/user') : '/login' },
         ].map(item => {
           const active = pathname === item.href;
           return (
@@ -887,7 +898,7 @@ export default function Navbar({ user }) {
               borderRadius: 12,
               background: active ? 'rgba(99,102,241,0.12)' : 'transparent',
             }}>
-              <span style={{ fontSize: 20, position: 'relative' }}>
+              <span style={{ position: 'relative', display: 'flex', alignItems: 'center', color: active ? '#818CF8' : (isDark ? '#64748B' : '#6B7280') }}>
                 {item.icon}
                 {item.badge > 0 && (
                   <span style={{
@@ -895,11 +906,11 @@ export default function Navbar({ user }) {
                     background: '#6366F1', color: '#fff',
                     fontSize: 8, fontWeight: 800, width: 13, height: 13,
                     borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center',
-                    fontFamily: 'Syne, sans-serif',
+                    fontFamily: 'sans-serif',
                   }}>{item.badge}</span>
                 )}
               </span>
-              <span style={{ color: active ? '#818CF8' : (isDark ? '#64748B' : '#6B7280'), fontSize: 10, fontWeight: 600, fontFamily: 'Syne, sans-serif' }}>{item.label}</span>
+              <span style={{ color: active ? '#818CF8' : (isDark ? '#64748B' : '#6B7280'), fontSize: 10, fontWeight: 600, fontFamily: 'sans-serif' }}>{item.label}</span>
             </Link>
           );
         })}
@@ -948,12 +959,12 @@ function FAB() {
           fontSize: 12,
           fontWeight: 700,
           textDecoration: 'none',
-          fontFamily: 'Syne, sans-serif',
+          fontFamily: 'sans-serif',
           display: 'flex', alignItems: 'center', gap: 8,
           boxShadow: '0 8px 24px rgba(0,0,0,0.4)',
           whiteSpace: 'nowrap',
         }} className="bottom-nav">
-          ⚖️ Compare ({comparing}) →
+          Compare ({comparing}) &rarr;
         </Link>
       )}
 
@@ -975,9 +986,9 @@ function FAB() {
           }}>
             <style>{`@keyframes fabIn { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }`}</style>
             {[
-              { icon: '🤖', label: 'AI Support', color: '#6366F1', href: '/support' },
-              { icon: '🔬', label: 'Tech Finder', color: '#10B981', href: '/quiz' },
-              { icon: '⚖️', label: 'Compare', color: '#F59E0B', href: '/compare' },
+              { icon: 'AI', label: 'AI Support', color: '#6366F1', href: '/support' },
+              { icon: 'TF', label: 'Tech Finder', color: '#10B981', href: '/quiz' },
+              { icon: 'VS', label: 'Compare', color: '#F59E0B', href: '/compare' },
             ].map(action => (
               <Link key={action.label} href={action.href} style={{
                 display: 'flex', alignItems: 'center', gap: 10,
@@ -988,8 +999,8 @@ function FAB() {
                 textDecoration: 'none',
                 boxShadow: '0 4px 16px rgba(0,0,0,0.4)',
               }}>
-                <span style={{ fontSize: 16 }}>{action.icon}</span>
-                <span style={{ color: '#F9FAFB', fontSize: 12, fontWeight: 700, fontFamily: 'Syne, sans-serif' }}>{action.label}</span>
+                <span style={{ fontSize: 12, fontWeight: 900, color: action.color, fontFamily: 'sans-serif' }}>{action.icon}</span>
+                <span style={{ color: '#F9FAFB', fontSize: 12, fontWeight: 700, fontFamily: 'sans-serif' }}>{action.label}</span>
               </Link>
             ))}
           </div>
@@ -1007,7 +1018,7 @@ function FAB() {
           transition: 'background 0.2s, box-shadow 0.2s, transform 0.15s',
           transform: open ? 'rotate(45deg)' : 'rotate(0)',
         }}>
-          {open ? '×' : '✦'}
+          {open ? 'x' : '+'}
         </button>
       </div>
     </>

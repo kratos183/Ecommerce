@@ -89,7 +89,7 @@ function AccordionCol({ col }) {
       <button onClick={() => setOpen(o => !o)} style={{
         width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'center',
         padding: '14px 0', background: 'none', border: 'none', cursor: 'pointer',
-        color: t.textPrimary, fontWeight: 700, fontSize: 13, fontFamily: 'Syne, sans-serif',
+        color: t.textPrimary, fontWeight: 700, fontSize: 13, fontFamily: 'sans-serif',
         letterSpacing: '0.04em', textTransform: 'uppercase',
         transition: 'color 0.35s',
       }}>
@@ -142,10 +142,10 @@ function Newsletter() {
             background: 'rgba(99,102,241,0.2)', border: '1px solid rgba(99,102,241,0.35)',
             color: '#818CF8', fontSize: 10, fontWeight: 800, padding: '3px 10px',
             borderRadius: 20, letterSpacing: '0.1em', textTransform: 'uppercase',
-            fontFamily: 'Syne, sans-serif',
+            fontFamily: 'sans-serif',
           }}>Insider Access</span>
         </div>
-        <h3 style={{ color: t.textPrimary, fontSize: 22, fontWeight: 900, fontFamily: 'Syne, sans-serif', marginBottom: 6, transition: 'color 0.35s' }}>
+        <h3 style={{ color: t.textPrimary, fontSize: 22, fontWeight: 900, fontFamily: 'sans-serif', marginBottom: 6, transition: 'color 0.35s' }}>
           Get Early Access to Future Drops
         </h3>
         <p style={{ color: t.textFaint, fontSize: 13, lineHeight: 1.6, transition: 'color 0.35s' }}>
@@ -153,17 +153,17 @@ function Newsletter() {
         </p>
       </div>
 
-      <div style={{ minWidth: 320 }}>
+      <div className="newsletter-form-container" style={{ width: '100%', maxWidth: 400 }}>
         {state === 'success' ? (
           <div style={{
             background: 'rgba(16,185,129,0.1)', border: '1px solid rgba(16,185,129,0.3)',
             borderRadius: 14, padding: '16px 24px', textAlign: 'center',
-            color: '#10B981', fontSize: 14, fontWeight: 700, fontFamily: 'Syne, sans-serif',
+            color: '#10B981', fontSize: 14, fontWeight: 700, fontFamily: 'sans-serif',
           }}>
             ✓ You're on the list! Welcome to the inner circle.
           </div>
         ) : (
-          <div style={{ display: 'flex', gap: 8 }}>
+          <div className="newsletter-input-group" style={{ display: 'flex', gap: 8 }}>
             <input
               type="email"
               value={email}
@@ -179,7 +179,7 @@ function Newsletter() {
                 color: t.textPrimary,
                 fontSize: 13,
                 outline: 'none',
-                fontFamily: 'DM Sans, sans-serif',
+                fontFamily: 'sans-serif',
                 transition: 'border-color 0.2s, box-shadow 0.2s, background 0.35s, color 0.35s',
               }}
               onFocus={e => { e.target.style.borderColor = 'rgba(99,102,241,0.5)'; e.target.style.boxShadow = '0 0 0 3px rgba(99,102,241,0.1)'; }}
@@ -196,7 +196,7 @@ function Newsletter() {
               fontWeight: 800,
               fontSize: 13,
               cursor: state === 'loading' ? 'not-allowed' : 'pointer',
-              fontFamily: 'Syne, sans-serif',
+              fontFamily: 'sans-serif',
               whiteSpace: 'nowrap',
               boxShadow: state === 'loading' ? 'none' : '0 4px 16px rgba(99,102,241,0.35)',
               transition: 'opacity 0.2s, transform 0.15s, box-shadow 0.2s',
@@ -225,7 +225,7 @@ export default function Footer() {
     <footer style={{
       background: t.bgPage,
       borderTop: `1px solid ${t.borderNav}`,
-      fontFamily: 'DM Sans, sans-serif',
+      fontFamily: 'sans-serif',
       marginTop: 0,
       transition: 'background 0.35s ease, border-color 0.35s ease',
     }}>
@@ -241,6 +241,8 @@ export default function Footer() {
           .footer-cols-desktop { display: none !important; }
           .footer-cols-mobile { display: block !important; }
           .newsletter-grid { grid-template-columns: 1fr !important; gap: 20px !important; padding: 28px 24px !important; }
+          .newsletter-input-group { flex-direction: column !important; }
+          .newsletter-input-group button { width: 100% !important; }
           .footer-top { flex-direction: column !important; gap: 32px !important; }
           .footer-bottom-inner { flex-direction: column !important; gap: 20px !important; align-items: flex-start !important; }
         }
@@ -260,7 +262,7 @@ export default function Footer() {
 
           {/* Brand column */}
           <div style={{ flexShrink: 0, width: 240 }}>
-            <a href="/" style={{ fontFamily: 'Syne, sans-serif', fontWeight: 900, fontSize: 22, color: t.textPrimary, textDecoration: 'none', letterSpacing: '-0.02em', display: 'block', marginBottom: 12, transition: 'color 0.35s' }}>
+            <a href="/" style={{ fontFamily: 'sans-serif', fontWeight: 900, fontSize: 22, color: t.textPrimary, textDecoration: 'none', letterSpacing: '-0.02em', display: 'block', marginBottom: 12, transition: 'color 0.35s' }}>
               <span style={{ color: '#6366F1' }}>Tech</span>Store
             </a>
             <p style={{ color: t.textFaint, fontSize: 13, lineHeight: 1.7, marginBottom: 20, transition: 'color 0.35s' }}>
@@ -269,16 +271,16 @@ export default function Footer() {
 
             {/* Contact hub */}
             <div style={{ display: 'flex', flexDirection: 'column', gap: 8, marginBottom: 24 }}>
-              <a href="tel:+18005551234" style={{
+              <a href="tel:+917992430183" style={{
                 display: 'flex', alignItems: 'center', gap: 8,
                 color: '#10B981', fontSize: 13, fontWeight: 600, textDecoration: 'none',
-                fontFamily: 'Syne, sans-serif',
+                fontFamily: 'sans-serif',
                 transition: 'color 0.2s',
               }}
                 onMouseEnter={e => e.currentTarget.style.color = '#34D399'}
                 onMouseLeave={e => e.currentTarget.style.color = '#10B981'}
               >
-                <span>📞</span> +1 (800) 555-1234
+                <span>📞</span> +91 7992430183
               </a>
               <a href="https://maps.google.com" target="_blank" rel="noopener noreferrer" style={{
                 display: 'flex', alignItems: 'center', gap: 8,
@@ -288,13 +290,13 @@ export default function Footer() {
                 onMouseEnter={e => e.currentTarget.style.color = t.textSecondary}
                 onMouseLeave={e => e.currentTarget.style.color = t.textFaint}
               >
-                <span>📍</span> 123 Tech Ave, San Francisco, CA
+                <span>📍</span> Shyamdih,Katras bazaar,Dhanbad,Jharkhand,India
               </a>
               <button style={{
                 display: 'flex', alignItems: 'center', gap: 8,
                 color: '#6366F1', fontSize: 12, fontWeight: 600,
                 background: 'none', border: 'none', cursor: 'pointer',
-                padding: 0, fontFamily: 'Syne, sans-serif',
+                padding: 0, fontFamily: 'sans-serif',
                 transition: 'color 0.2s',
               }}
                 onMouseEnter={e => e.currentTarget.style.color = '#818CF8'}
@@ -318,7 +320,7 @@ export default function Footer() {
                   border: `1px solid ${t.borderSubtle}`,
                   color: t.textSecondary,
                   transition: 'background 0.2s, color 0.2s, box-shadow 0.2s, transform 0.15s, border-color 0.2s',
-                  fontFamily: 'Syne, sans-serif',
+                  fontFamily: 'sans-serif',
                 }}
                   onMouseEnter={e => {
                     e.currentTarget.style.background = s.color + '22';
@@ -343,7 +345,7 @@ export default function Footer() {
           <div className="footer-cols-desktop" style={{ flex: 1, display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 24 }}>
             {FOOTER_COLS.map(col => (
               <div key={col.heading}>
-                <h4 style={{ color: t.textPrimary, fontSize: 11, fontWeight: 800, letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 16, fontFamily: 'Syne, sans-serif', transition: 'color 0.35s' }}>
+                <h4 style={{ color: t.textPrimary, fontSize: 11, fontWeight: 800, letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 16, fontFamily: 'sans-serif', transition: 'color 0.35s' }}>
                   {col.heading}
                 </h4>
                 <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
@@ -402,7 +404,7 @@ export default function Footer() {
             >
               <span style={{ fontSize: 20 }}>{b.icon}</span>
               <div>
-                <p style={{ color: t.textPrimary, fontSize: 12, fontWeight: 700, margin: 0, fontFamily: 'Syne, sans-serif', transition: 'color 0.35s' }}>{b.label}</p>
+                <p style={{ color: t.textPrimary, fontSize: 12, fontWeight: 700, margin: 0, fontFamily: 'sans-serif', transition: 'color 0.35s' }}>{b.label}</p>
                 <p style={{ color: t.textFaint, fontSize: 11, margin: 0, transition: 'color 0.35s' }}>{b.sub}</p>
               </div>
             </div>
@@ -411,7 +413,7 @@ export default function Footer() {
 
         {/* Payment methods */}
         <div style={{ marginBottom: 32 }}>
-          <p style={{ color: t.textVeryFaint, fontSize: 11, fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 10, fontFamily: 'Syne, sans-serif', transition: 'color 0.35s' }}>
+          <p style={{ color: t.textVeryFaint, fontSize: 11, fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 10, fontFamily: 'sans-serif', transition: 'color 0.35s' }}>
             Secure Payments
           </p>
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
@@ -424,7 +426,7 @@ export default function Footer() {
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
                 fontSize: 11, fontWeight: 700,
                 color: t.textFaint,
-                fontFamily: 'Syne, sans-serif',
+                fontFamily: 'sans-serif',
                 transition: 'background 0.15s, border-color 0.15s, color 0.15s',
                 minWidth: 52,
                 height: 34,

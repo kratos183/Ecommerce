@@ -29,7 +29,7 @@ export default function DashboardClient({ user, orders, justOrdered }) {
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800;900&family=DM+Sans:wght@400;500;600&display=swap');
         *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
-        body { background:${t.bgPage}; font-family:'DM Sans',sans-serif; color:${t.textPrimary}; }
+        body { background:${t.bgPage}; font-family: sans-serif; color:${t.textPrimary}; }
         a { text-decoration:none; }
       `}</style>
 
@@ -45,7 +45,7 @@ export default function DashboardClient({ user, orders, justOrdered }) {
           }}>
             <div style={{ fontSize: 20 }}>🎉</div>
             <div>
-              <p style={{ color: '#10B981', fontWeight: 800, fontSize: 14, fontFamily: 'Syne,sans-serif' }}>Order Placed!</p>
+              <p style={{ color: '#10B981', fontWeight: 800, fontSize: 14, fontFamily: 'sans-serif' }}>Order Placed!</p>
               <p style={{ color: t.textFaint, fontSize: 12, transition: 'color 0.35s' }}>Track progress below.</p>
             </div>
           </div>
@@ -61,13 +61,13 @@ export default function DashboardClient({ user, orders, justOrdered }) {
                   borderRadius: 18,
                   display: 'flex', alignItems: 'center', justifyContent: 'center',
                   fontSize: 26, fontWeight: 900, color: '#fff',
-                  fontFamily: 'Syne,sans-serif',
+                  fontFamily: 'sans-serif',
                   flexShrink: 0,
                 }}>
                   {(user.name || user.email || 'U').charAt(0).toUpperCase()}
                 </div>
                 <div>
-                  <h1 style={{ color: t.textPrimary, fontSize: 26, fontWeight: 900, fontFamily: 'Syne,sans-serif', transition: 'color 0.35s' }}>
+                  <h1 style={{ color: t.textPrimary, fontSize: 26, fontWeight: 900, fontFamily: 'sans-serif', transition: 'color 0.35s' }}>
                     Welcome back{user.name ? `, ${user.name.split(' ')[0]}` : ''}
                   </h1>
                   <p style={{ color: t.textFaint, fontSize: 13, marginTop: 4, transition: 'color 0.35s' }}>{user.email}</p>
@@ -78,12 +78,12 @@ export default function DashboardClient({ user, orders, justOrdered }) {
                 <Link href="/products" style={{
                   background: 'linear-gradient(135deg,#6366F1,#8B5CF6)',
                   color: '#fff', borderRadius: 12, padding: '11px 20px',
-                  fontSize: 13, fontWeight: 800, fontFamily: 'Syne,sans-serif',
+                  fontSize: 13, fontWeight: 800, fontFamily: 'sans-serif',
                 }}>🛍 Shop Now</Link>
                 <Link href="/cart" style={{
                   background: t.bgInput, border: `1px solid ${t.borderInput}`,
                   color: t.textSecondary, borderRadius: 12, padding: '11px 18px',
-                  fontSize: 13, fontWeight: 600, fontFamily: 'Syne,sans-serif',
+                  fontSize: 13, fontWeight: 600, fontFamily: 'sans-serif',
                   transition: 'background 0.35s, border-color 0.35s, color 0.35s',
                 }}>🛒 View Cart</Link>
               </div>
@@ -94,22 +94,22 @@ export default function DashboardClient({ user, orders, justOrdered }) {
         <div style={{ maxWidth: 1280, margin: '0 auto', padding: '36px 48px' }}>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(220px,1fr))', gap: 16, marginBottom: 40 }}>
             <div style={{ background: t.bgNav, border: `1px solid ${t.borderMuted}`, borderRadius: 20, padding: 24, transition: 'background 0.35s, border-color 0.35s' }}>
-              <p style={{ color: t.textFaint, fontSize: 11, fontWeight: 700, textTransform: 'uppercase', fontFamily: 'Syne,sans-serif', marginBottom: 4, transition: 'color 0.35s' }}>Total Orders</p>
-              <p style={{ color: t.textPrimary, fontSize: 32, fontWeight: 900, fontFamily: 'Syne,sans-serif', transition: 'color 0.35s' }}>{orders.length}</p>
+              <p style={{ color: t.textFaint, fontSize: 11, fontWeight: 700, textTransform: 'uppercase', fontFamily: 'sans-serif', marginBottom: 4, transition: 'color 0.35s' }}>Total Orders</p>
+              <p style={{ color: t.textPrimary, fontSize: 32, fontWeight: 900, fontFamily: 'sans-serif', transition: 'color 0.35s' }}>{orders.length}</p>
             </div>
             <div style={{ background: t.bgNav, border: `1px solid ${t.borderMuted}`, borderRadius: 20, padding: 24, transition: 'background 0.35s, border-color 0.35s' }}>
-              <p style={{ color: t.textFaint, fontSize: 11, fontWeight: 700, textTransform: 'uppercase', fontFamily: 'Syne,sans-serif', marginBottom: 4, transition: 'color 0.35s' }}>Total Spent</p>
-              <p style={{ color: t.textPrimary, fontSize: 32, fontWeight: 900, fontFamily: 'Syne,sans-serif', transition: 'color 0.35s' }}>${totalSpend.toFixed(0)}</p>
+              <p style={{ color: t.textFaint, fontSize: 11, fontWeight: 700, textTransform: 'uppercase', fontFamily: 'sans-serif', marginBottom: 4, transition: 'color 0.35s' }}>Total Spent</p>
+              <p style={{ color: t.textPrimary, fontSize: 32, fontWeight: 900, fontFamily: 'sans-serif', transition: 'color 0.35s' }}>${totalSpend.toFixed(0)}</p>
             </div>
             <div style={{ background: t.bgNav, border: `1px solid ${t.borderMuted}`, borderRadius: 20, padding: 24, transition: 'background 0.35s, border-color 0.35s' }}>
-              <p style={{ color: t.textFaint, fontSize: 11, fontWeight: 700, textTransform: 'uppercase', fontFamily: 'Syne,sans-serif', marginBottom: 4, transition: 'color 0.35s' }}>Active Orders</p>
-              <p style={{ color: t.textPrimary, fontSize: 32, fontWeight: 900, fontFamily: 'Syne,sans-serif', transition: 'color 0.35s' }}>{pending}</p>
+              <p style={{ color: t.textFaint, fontSize: 11, fontWeight: 700, textTransform: 'uppercase', fontFamily: 'sans-serif', marginBottom: 4, transition: 'color 0.35s' }}>Active Orders</p>
+              <p style={{ color: t.textPrimary, fontSize: 32, fontWeight: 900, fontFamily: 'sans-serif', transition: 'color 0.35s' }}>{pending}</p>
             </div>
           </div>
 
           {orders.length > 0 ? (
             <div style={{ background: t.bgNav, border: `1px solid ${t.borderMuted}`, borderRadius: 20, padding: 24, transition: 'background 0.35s, border-color 0.35s' }}>
-              <h2 style={{ color: t.textPrimary, fontSize: 20, fontWeight: 900, fontFamily: 'Syne,sans-serif', marginBottom: 20, transition: 'color 0.35s' }}>Recent Orders</h2>
+              <h2 style={{ color: t.textPrimary, fontSize: 20, fontWeight: 900, fontFamily: 'sans-serif', marginBottom: 20, transition: 'color 0.35s' }}>Recent Orders</h2>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
                 {orders.slice(0, 5).map(order => {
                   const meta = getStatusMeta(order.status);
@@ -133,11 +133,11 @@ export default function DashboardClient({ user, orders, justOrdered }) {
           ) : (
             <div style={{ textAlign: 'center', padding: '64px 32px', background: t.bgNav, border: `1px solid ${t.borderMuted}`, borderRadius: 20, transition: 'background 0.35s, border-color 0.35s' }}>
               <div style={{ fontSize: 72, marginBottom: 16 }}>📦</div>
-              <h3 style={{ color: t.textPrimary, fontSize: 18, fontWeight: 800, fontFamily: 'Syne,sans-serif', marginBottom: 8, transition: 'color 0.35s' }}>No orders yet</h3>
+              <h3 style={{ color: t.textPrimary, fontSize: 18, fontWeight: 800, fontFamily: 'sans-serif', marginBottom: 8, transition: 'color 0.35s' }}>No orders yet</h3>
               <Link href="/products" style={{
                 background: 'linear-gradient(135deg,#6366F1,#8B5CF6)',
                 color: '#fff', padding: '13px 28px', borderRadius: 12,
-                fontWeight: 800, fontSize: 13, fontFamily: 'Syne,sans-serif',
+                fontWeight: 800, fontSize: 13, fontFamily: 'sans-serif',
                 display: 'inline-block',
               }}>Browse Products →</Link>
             </div>
