@@ -11,6 +11,8 @@ If your app is connected to GitHub and Vercel:
    git add .
    git commit -m "Your commit message"
    git push origin main
+   git push origin main --force
+
    ```
 
 2. **Vercel auto-deploys** - Your app will automatically redeploy within 1-2 minutes
