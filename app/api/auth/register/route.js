@@ -32,14 +32,21 @@ export async function POST(request) {
     const hashedPassword = await hashPassword(password);
     const user = await User.create({ name, email, password: hashedPassword });
 
-    const token = await generateToken({ userId: user._id, role: user.role });
+    const token = await generateToken({
+      userId: user._id,
+      role: user.role,
+      name: user.name,
+      email: user.email,
+    });
+
+    const isProd = process.env.NODE_ENV === 'production';
 
     const response = Response.json({ 
       message: 'Registration successful',
       user: { id: user._id, name: user.name, email: user.email, role: user.role }
     }, { status: 201 });
 
-    response.headers.set('Set-Cookie', `token=${token}; HttpOnly; Path=/; Max-Age=604800; SameSite=Strict`);
+    response.headers.set('Set-Cookie', `token=${token}; HttpOnly; Path=/; Max-Age=604800; SameSite=Lax${isProd ? '; Secure' : ''}`);
 
     return response;
   } catch (error) {

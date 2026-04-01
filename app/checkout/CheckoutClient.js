@@ -540,7 +540,7 @@ export default function CheckoutClient() {
                         </p>
                         <span style={{ color: 'var(--text-muted)', fontSize: 12 }}>×{item.quantity}</span>
                         <span style={{ color: 'var(--text-primary)', fontSize: 13, fontWeight: 700, fontFamily: 'sans-serif' }}>
-                          ${((item.product?.price || 0) * item.quantity).toFixed(2)}
+                          ₹{((item.product?.price || 0) * item.quantity).toFixed(2)}
                         </span>
                       </div>
                     ))}
@@ -614,7 +614,7 @@ export default function CheckoutClient() {
                         <p style={{ color: 'var(--text-muted)', fontSize: 11 }}>Qty: {item.quantity}</p>
                       </div>
                       <span style={{ color: 'var(--text-primary)', fontSize: 13, fontWeight: 700, fontFamily: 'sans-serif', flexShrink: 0 }}>
-                        ${((item.product?.price || 0) * item.quantity).toFixed(2)}
+                        ₹{((item.product?.price || 0) * item.quantity).toFixed(2)}
                       </span>
                     </div>
                   ))}
