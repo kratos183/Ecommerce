@@ -1,11 +1,11 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { useT } from '../themeTokens';
 
-export default function LoginPage() {
+function LoginContent() {
   const router = useRouter();
   const t = useT();
   const [loading, setLoading] = useState(false);
@@ -339,5 +339,13 @@ export default function LoginPage() {
         </div>
       )}
     </>
+  );
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense fallback={<div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>Loading...</div>}>
+      <LoginContent />
+    </Suspense>
   );
 }
