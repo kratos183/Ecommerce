@@ -99,7 +99,7 @@ export default function DashboardClient({ user, orders, justOrdered }) {
             </div>
             <div style={{ background: t.bgNav, border: `1px solid ${t.borderMuted}`, borderRadius: 20, padding: 24, transition: 'background 0.35s, border-color 0.35s' }}>
               <p style={{ color: t.textFaint, fontSize: 11, fontWeight: 700, textTransform: 'uppercase', fontFamily: 'sans-serif', marginBottom: 4, transition: 'color 0.35s' }}>Total Spent</p>
-              <p style={{ color: t.textPrimary, fontSize: 32, fontWeight: 900, fontFamily: 'sans-serif', transition: 'color 0.35s' }}>${totalSpend.toFixed(0)}</p>
+              <p style={{ color: t.textPrimary, fontSize: 32, fontWeight: 900, fontFamily: 'sans-serif', transition: 'color 0.35s' }}>₹{totalSpend.toFixed(0)}</p>
             </div>
             <div style={{ background: t.bgNav, border: `1px solid ${t.borderMuted}`, borderRadius: 20, padding: 24, transition: 'background 0.35s, border-color 0.35s' }}>
               <p style={{ color: t.textFaint, fontSize: 11, fontWeight: 700, textTransform: 'uppercase', fontFamily: 'sans-serif', marginBottom: 4, transition: 'color 0.35s' }}>Active Orders</p>
@@ -120,7 +120,7 @@ export default function DashboardClient({ user, orders, justOrdered }) {
                         <p style={{ color: t.textFaint, fontSize: 12, transition: 'color 0.35s' }}>{formatDate(order.createdAt)}</p>
                       </div>
                       <div style={{ textAlign: 'right' }}>
-                        <p style={{ color: t.textPrimary, fontSize: 16, fontWeight: 700, transition: 'color 0.35s' }}>${order.totalAmount?.toFixed(2)}</p>
+                        <p style={{ color: t.textPrimary, fontSize: 16, fontWeight: 700, transition: 'color 0.35s' }}>₹{order.totalAmount?.toFixed(2)}</p>
                         <span style={{ background: meta.bg, color: meta.color, fontSize: 10, fontWeight: 700, padding: '2px 8px', borderRadius: 4 }}>
                           {meta.icon} {meta.label}
                         </span>

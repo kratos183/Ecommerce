@@ -603,6 +603,7 @@ export default function Navbar({ user }) {
 
   const handleLogout = async () => {
     await fetch('/api/auth/logout', { method: 'POST' });
+    localStorage.removeItem('guestCart');
     window.location.reload();
   };
 

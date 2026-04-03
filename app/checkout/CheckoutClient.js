@@ -200,6 +200,7 @@ export default function CheckoutClient() {
                 })
               });
               if (verifyRes.ok) {
+                localStorage.removeItem('guestCart');
                 router.push('/dashboard/user?order=success');
               } else {
                 alert('Payment verification failed.');
@@ -227,6 +228,7 @@ export default function CheckoutClient() {
         });
         rzp.open();
       } else {
+        localStorage.removeItem('guestCart');
         router.push('/dashboard/user?order=success');
       }
     } catch { 
