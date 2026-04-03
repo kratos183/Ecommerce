@@ -175,7 +175,9 @@ function SearchBar({ compact = false, onClose, isDark = true }) {
   const [query, setQuery] = useState('');
   const [results, setResults] = useState([]);
   const [focused, setFocused] = useState(false);
+  const [listening, setListening] = useState(false);
   const inputRef = useRef(null);
+  const recognitionRef = useRef(null);
   const router = useRouter();
 
   const bgInput = isDark ? 'rgba(255,255,255,0.06)' : 'rgba(99,102,241,0.06)';
@@ -191,6 +193,15 @@ function SearchBar({ compact = false, onClose, isDark = true }) {
     if (compact && inputRef.current) inputRef.current.focus();
   }, [compact]);
 
+  // Cleanup speech recognition on unmount
+  useEffect(() => {
+    return () => {
+      if (recognitionRef.current) {
+        recognitionRef.current.abort();
+      }
+    };
+  }, []);
+
   const handleChange = (val) => {
     setQuery(val);
     if (val.trim().length > 1) {
@@ -204,6 +215,41 @@ function SearchBar({ compact = false, onClose, isDark = true }) {
     }
   };
 
+  const handleVoiceSearch = () => {
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (!SpeechRecognition) {
+      alert('Voice search is not supported in your browser. Please try Chrome or Edge.');
+      return;
+    }
+
+    if (listening) {
+      // Stop listening
+      if (recognitionRef.current) recognitionRef.current.stop();
+      setListening(false);
+      return;
+    }
+
+    const recognition = new SpeechRecognition();
+    recognitionRef.current = recognition;
+    recognition.lang = 'en-US';
+    recognition.interimResults = false;
+    recognition.maxAlternatives = 1;
+
+    recognition.onstart = () => setListening(true);
+
+    recognition.onresult = (event) => {
+      const transcript = event.results[0][0].transcript;
+      handleChange(transcript);
+      setListening(false);
+      if (inputRef.current) inputRef.current.focus();
+    };
+
+    recognition.onerror = () => setListening(false);
+    recognition.onend = () => setListening(false);
+
+    recognition.start();
+  };
+
   const showDropdown = focused && (results.length > 0 || query.length > 1);
 
   return (
@@ -212,12 +258,12 @@ function SearchBar({ compact = false, onClose, isDark = true }) {
         display: 'flex',
         alignItems: 'center',
         background: bgInput,
-        border: `1px solid ${focused ? 'rgba(99,102,241,0.6)' : borderDefault}`,
+        border: `1px solid ${focused ? 'rgba(99,102,241,0.6)' : listening ? 'rgba(239,68,68,0.6)' : borderDefault}`,
         borderRadius: 12,
         padding: '0 14px',
         gap: 10,
         transition: 'border-color 0.2s, box-shadow 0.2s, background 0.35s',
-        boxShadow: focused ? '0 0 0 3px rgba(99,102,241,0.15)' : 'none',
+        boxShadow: focused ? '0 0 0 3px rgba(99,102,241,0.15)' : listening ? '0 0 0 3px rgba(239,68,68,0.15)' : 'none',
         width: compact ? '100%' : 280,
       }}>
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ opacity: 0.6 }}><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
@@ -236,7 +282,7 @@ function SearchBar({ compact = false, onClose, isDark = true }) {
               e.currentTarget.blur();
             }
           }}
-          placeholder={compact ? 'Search products, models, specs…' : 'Search…'}
+          placeholder={listening ? 'Listening…' : compact ? 'Search products, models, specs…' : 'Search…'}
           style={{
             background: 'transparent',
             border: 'none',
@@ -253,15 +299,43 @@ function SearchBar({ compact = false, onClose, isDark = true }) {
           <button onClick={() => { setQuery(''); setResults([]); }}
             style={{ background: 'none', border: 'none', color: subText, cursor: 'pointer', fontSize: 16, padding: 0 }}>×</button>
         )}
-        <button title="Voice search" style={{
-          background: 'none', border: 'none', cursor: 'pointer',
-          opacity: 0.5, padding: 0, transition: 'opacity 0.2s',
-          display: 'flex', alignItems: 'center',
-        }}
+        <button
+          title="Voice search"
+          onClick={handleVoiceSearch}
+          style={{
+            background: listening ? 'rgba(239,68,68,0.15)' : 'none',
+            border: 'none',
+            cursor: 'pointer',
+            opacity: listening ? 1 : 0.5,
+            padding: 4,
+            borderRadius: 6,
+            transition: 'opacity 0.2s, background 0.2s',
+            display: 'flex',
+            alignItems: 'center',
+          }}
           onMouseEnter={e => e.currentTarget.style.opacity = '1'}
-          onMouseLeave={e => e.currentTarget.style.opacity = '0.5'}
-        ><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 1a3 3 0 00-3 3v8a3 3 0 006 0V4a3 3 0 00-3-3z"/><path d="M19 10v2a7 7 0 01-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg></button>
+          onMouseLeave={e => { if (!listening) e.currentTarget.style.opacity = '0.5'; }}
+        >
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={listening ? '#EF4444' : 'currentColor'} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M12 1a3 3 0 00-3 3v8a3 3 0 006 0V4a3 3 0 00-3-3z"/>
+            <path d="M19 10v2a7 7 0 01-14 0v-2"/>
+            <line x1="12" y1="19" x2="12" y2="23"/>
+            <line x1="8" y1="23" x2="16" y2="23"/>
+          </svg>
+          {listening && (
+            <span style={{
+              display: 'inline-block',
+              width: 6, height: 6,
+              borderRadius: '50%',
+              background: '#EF4444',
+              marginLeft: 4,
+              animation: 'pulse 1s infinite',
+            }}/>
+          )}
+        </button>
       </div>
+
+      <style>{`@keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.3; } }`}</style>
 
       {showDropdown && (
         <div style={{
