@@ -1,3 +1,4 @@
+import { NextResponse } from 'next/server';
 import connectDB from '@/lib/db';
 import User from '@/models/User';
 import { verifyPassword, generateToken } from '@/lib/auth';
@@ -10,30 +11,30 @@ export async function POST(request) {
     const password = body.password;
 
     if (!validateRequired({ email, password })) {
-      return Response.json({ error: 'All fields required' }, { status: 400 });
+      return NextResponse.json({ error: 'All fields required' }, { status: 400 });
     }
 
     if (!validateEmail(email)) {
-      return Response.json({ error: 'Invalid email' }, { status: 400 });
+      return NextResponse.json({ error: 'Invalid email' }, { status: 400 });
     }
 
     await connectDB();
 
     const user = await User.findOne({ email });
     if (!user) {
-      return Response.json({ error: 'Invalid credentials' }, { status: 401 });
+      return NextResponse.json({ error: 'Invalid credentials' }, { status: 401 });
     }
 
     // OAuth user trying to log in with password
     if (!user.password && user.provider !== 'local') {
-      return Response.json({ 
+      return NextResponse.json({ 
         error: `This account uses ${user.provider === 'google' ? 'Google' : 'GitHub'} sign-in. Please use the ${user.provider === 'google' ? 'Google' : 'GitHub'} button.` 
       }, { status: 400 });
     }
 
     const isValid = await verifyPassword(password, user.password);
     if (!isValid) {
-      return Response.json({ error: 'Invalid credentials' }, { status: 401 });
+      return NextResponse.json({ error: 'Invalid credentials' }, { status: 401 });
     }
 
     const token = await generateToken({
@@ -43,20 +44,22 @@ export async function POST(request) {
       email: user.email,
     });
 
-    const isProd = process.env.NODE_ENV === 'production';
-    const cookieFlags = `token=${token}; HttpOnly; Path=/; Max-Age=604800; SameSite=Lax${isProd ? '; Secure' : ''}`;
-
-    const response = Response.json({ 
+    const response = NextResponse.json({ 
       message: 'Login successful',
       user: { id: user._id, name: user.name, email: user.email, role: user.role }
     });
 
-    response.headers.set('Set-Cookie', cookieFlags);
+    response.cookies.set('token', token, {
+      httpOnly: true,
+      path: '/',
+      maxAge: 604800,
+      sameSite: 'lax',
+      secure: process.env.NODE_ENV === 'production',
+    });
 
     return response;
   } catch (error) {
     console.error('Login error:', error);
-    return Response.json({ error: 'Login failed' }, { status: 500 });
+    return NextResponse.json({ error: 'Login failed' }, { status: 500 });
   }
 }
-

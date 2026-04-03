@@ -11,6 +11,8 @@ export async function GET(request) {
       return NextResponse.redirect(new URL('/login?error=google_denied', request.url));
     }
 
+    const origin = new URL(request.url).origin;
+
     // Exchange code for tokens
     const tokenRes = await fetch('https://oauth2.googleapis.com/token', {
       method: 'POST',
@@ -19,7 +21,7 @@ export async function GET(request) {
         code,
         client_id: process.env.GOOGLE_CLIENT_ID,
         client_secret: process.env.GOOGLE_CLIENT_SECRET,
-        redirect_uri: `${process.env.NEXT_PUBLIC_API_URL}/api/auth/google/callback`,
+        redirect_uri: `${origin}/api/auth/google/callback`,
         grant_type: 'authorization_code',
       }),
     });
@@ -42,8 +44,8 @@ export async function GET(request) {
       return NextResponse.redirect(new URL('/login?error=google_no_email', request.url));
     }
 
-    // Find or create user, get JWT cookie
-    const { cookie } = await handleOAuthUser({
+    // Find or create user, get JWT token
+    const { token } = await handleOAuthUser({
       email: profile.email,
       name: profile.name || profile.email.split('@')[0],
       avatar: profile.picture || null,
@@ -53,7 +55,13 @@ export async function GET(request) {
 
     const redirectTo = searchParams.get('state') || '/';
     const response = NextResponse.redirect(new URL(redirectTo, request.url));
-    response.headers.set('Set-Cookie', cookie);
+    response.cookies.set('token', token, {
+      httpOnly: true,
+      path: '/',
+      maxAge: 604800,
+      sameSite: 'lax',
+      secure: process.env.NODE_ENV === 'production',
+    });
     return response;
   } catch (error) {
     console.error('Google OAuth error:', error);

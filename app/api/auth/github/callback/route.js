@@ -11,6 +11,8 @@ export async function GET(request) {
       return NextResponse.redirect(new URL('/login?error=github_denied', request.url));
     }
 
+    const origin = new URL(request.url).origin;
+
     // Exchange code for access token
     const tokenRes = await fetch('https://github.com/login/oauth/access_token', {
       method: 'POST',
@@ -22,7 +24,7 @@ export async function GET(request) {
         client_id: process.env.GITHUB_CLIENT_ID,
         client_secret: process.env.GITHUB_CLIENT_SECRET,
         code,
-        redirect_uri: `${process.env.NEXT_PUBLIC_API_URL}/api/auth/github/callback`,
+        redirect_uri: `${origin}/api/auth/github/callback`,
       }),
     });
 
@@ -61,8 +63,8 @@ export async function GET(request) {
       return NextResponse.redirect(new URL('/login?error=github_no_email', request.url));
     }
 
-    // Find or create user, get JWT cookie
-    const { cookie } = await handleOAuthUser({
+    // Find or create user, get JWT token
+    const { token } = await handleOAuthUser({
       email,
       name: profile.name || profile.login,
       avatar: profile.avatar_url || null,
@@ -72,7 +74,13 @@ export async function GET(request) {
 
     const redirectTo = searchParams.get('state') || '/';
     const response = NextResponse.redirect(new URL(redirectTo, request.url));
-    response.headers.set('Set-Cookie', cookie);
+    response.cookies.set('token', token, {
+      httpOnly: true,
+      path: '/',
+      maxAge: 604800,
+      sameSite: 'lax',
+      secure: process.env.NODE_ENV === 'production',
+    });
     return response;
   } catch (error) {
     console.error('GitHub OAuth error:', error);

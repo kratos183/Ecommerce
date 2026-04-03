@@ -2,7 +2,8 @@ import { NextResponse } from 'next/server';
 
 export async function GET(request) {
   const clientId = process.env.GITHUB_CLIENT_ID;
-  const redirectUri = `${process.env.NEXT_PUBLIC_API_URL}/api/auth/github/callback`;
+  const origin = new URL(request.url).origin;
+  const redirectUri = `${origin}/api/auth/github/callback`;
 
   const { searchParams } = new URL(request.url);
   const redirectTo = searchParams.get('redirect') || '/';

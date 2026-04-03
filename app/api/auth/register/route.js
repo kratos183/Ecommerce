@@ -1,3 +1,4 @@
+import { NextResponse } from 'next/server';
 import connectDB from '@/lib/db';
 import User from '@/models/User';
 import { hashPassword, generateToken } from '@/lib/auth';
@@ -11,22 +12,22 @@ export async function POST(request) {
     const password = body.password;
 
     if (!validateRequired({ name, email, password })) {
-      return Response.json({ error: 'All fields required' }, { status: 400 });
+      return NextResponse.json({ error: 'All fields required' }, { status: 400 });
     }
 
     if (!validateEmail(email)) {
-      return Response.json({ error: 'Invalid email' }, { status: 400 });
+      return NextResponse.json({ error: 'Invalid email' }, { status: 400 });
     }
 
     if (!validatePassword(password)) {
-      return Response.json({ error: 'Password must be at least 6 characters' }, { status: 400 });
+      return NextResponse.json({ error: 'Password must be at least 6 characters' }, { status: 400 });
     }
 
     await connectDB();
 
     const exists = await User.findOne({ email });
     if (exists) {
-      return Response.json({ error: 'Email already registered' }, { status: 400 });
+      return NextResponse.json({ error: 'Email already registered' }, { status: 400 });
     }
 
     const hashedPassword = await hashPassword(password);
@@ -39,18 +40,22 @@ export async function POST(request) {
       email: user.email,
     });
 
-    const isProd = process.env.NODE_ENV === 'production';
-
-    const response = Response.json({ 
+    const response = NextResponse.json({ 
       message: 'Registration successful',
       user: { id: user._id, name: user.name, email: user.email, role: user.role }
     }, { status: 201 });
 
-    response.headers.set('Set-Cookie', `token=${token}; HttpOnly; Path=/; Max-Age=604800; SameSite=Lax${isProd ? '; Secure' : ''}`);
+    response.cookies.set('token', token, {
+      httpOnly: true,
+      path: '/',
+      maxAge: 604800,
+      sameSite: 'lax',
+      secure: process.env.NODE_ENV === 'production',
+    });
 
     return response;
   } catch (error) {
     console.error('Registration error:', error);
-    return Response.json({ error: 'Registration failed', details: error.message }, { status: 500 });
+    return NextResponse.json({ error: 'Registration failed', details: error.message }, { status: 500 });
   }
 }

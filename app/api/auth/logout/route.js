@@ -1,6 +1,13 @@
+import { NextResponse } from 'next/server';
+
 export async function POST(request) {
-  const isProd = process.env.NODE_ENV === 'production';
-  const response = Response.json({ message: 'Logout successful' });
-  response.headers.set('Set-Cookie', `token=; HttpOnly; Path=/; Max-Age=0; SameSite=Lax${isProd ? '; Secure' : ''}`);
+  const response = NextResponse.json({ message: 'Logout successful' });
+  response.cookies.set('token', '', {
+    httpOnly: true,
+    path: '/',
+    maxAge: 0,
+    sameSite: 'lax',
+    secure: process.env.NODE_ENV === 'production',
+  });
   return response;
 }
