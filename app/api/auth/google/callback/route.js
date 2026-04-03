@@ -51,7 +51,8 @@ export async function GET(request) {
       providerId: profile.id,
     });
 
-    const response = NextResponse.redirect(new URL('/', request.url));
+    const redirectTo = searchParams.get('state') || '/';
+    const response = NextResponse.redirect(new URL(redirectTo, request.url));
     response.headers.set('Set-Cookie', cookie);
     return response;
   } catch (error) {

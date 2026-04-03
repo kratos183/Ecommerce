@@ -97,6 +97,22 @@ export default function CheckoutClient() {
   const fetchCart = async () => {
     setLoading(true);
     try {
+      // Sync guest cart from localStorage to server cart
+      const guestCart = JSON.parse(localStorage.getItem('guestCart') || '[]');
+      if (guestCart.length > 0) {
+        for (const item of guestCart) {
+          try {
+            await fetch('/api/cart', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ productId: item.productId, quantity: item.quantity }),
+            });
+          } catch { }
+        }
+        // Clear guest cart after syncing to server
+        localStorage.removeItem('guestCart');
+      }
+
       const res = await fetch('/api/cart');
       if (res.ok) {
         const data = await res.json();

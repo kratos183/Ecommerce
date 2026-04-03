@@ -45,7 +45,8 @@ function LoginContent() {
 
       if (res.ok) {
         setToast({ message: 'Login successful!', type: 'success' });
-        setTimeout(() => window.location.href = '/', 1000);
+        const redirectTo = searchParams.get('redirect') || '/';
+        setTimeout(() => window.location.href = redirectTo, 1000);
       } else {
         setToast({ message: data.error || 'Login failed', type: 'error' });
       }
@@ -220,7 +221,7 @@ function LoginContent() {
             {/* OAuth Buttons */}
             <div style={{ display: 'flex', gap: 12 }}>
               <a
-                href="/api/auth/google"
+                href={`/api/auth/google${searchParams.get('redirect') ? `?redirect=${encodeURIComponent(searchParams.get('redirect'))}` : ''}`}
                 style={{
                   flex: 1,
                   display: 'flex',
@@ -251,7 +252,7 @@ function LoginContent() {
                 Google
               </a>
               <a
-                href="/api/auth/github"
+                href={`/api/auth/github${searchParams.get('redirect') ? `?redirect=${encodeURIComponent(searchParams.get('redirect'))}` : ''}`}
                 style={{
                   flex: 1,
                   display: 'flex',

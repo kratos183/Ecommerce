@@ -22,7 +22,9 @@ export async function middleware(request) {
       if (pathname.startsWith('/api/')) {
         return Response.json({ error: 'Unauthorized' }, { status: 401 });
       }
-      return NextResponse.redirect(new URL('/login', request.url));
+      const loginUrl = new URL('/login', request.url);
+      loginUrl.searchParams.set('redirect', pathname);
+      return NextResponse.redirect(loginUrl);
     }
 
     const user = await verifyToken(token);
@@ -30,7 +32,9 @@ export async function middleware(request) {
       if (pathname.startsWith('/api/')) {
         return Response.json({ error: 'Unauthorized' }, { status: 401 });
       }
-      return NextResponse.redirect(new URL('/login', request.url));
+      const loginUrl = new URL('/login', request.url);
+      loginUrl.searchParams.set('redirect', pathname);
+      return NextResponse.redirect(loginUrl);
     }
 
     if (pathname.startsWith('/dashboard/admin') && user.role !== 'admin') {
