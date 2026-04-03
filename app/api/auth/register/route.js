@@ -33,27 +33,10 @@ export async function POST(request) {
     const hashedPassword = await hashPassword(password);
     const user = await User.create({ name, email, password: hashedPassword });
 
-    const token = await generateToken({
-      userId: user._id,
-      role: user.role,
-      name: user.name,
-      email: user.email,
-    });
-
-    const response = NextResponse.json({ 
+    return NextResponse.json({ 
       message: 'Registration successful',
       user: { id: user._id, name: user.name, email: user.email, role: user.role }
     }, { status: 201 });
-
-    response.cookies.set('token', token, {
-      httpOnly: true,
-      path: '/',
-      maxAge: 604800,
-      sameSite: 'lax',
-      secure: process.env.NODE_ENV === 'production',
-    });
-
-    return response;
   } catch (error) {
     console.error('Registration error:', error);
     return NextResponse.json({ error: 'Registration failed', details: error.message }, { status: 500 });

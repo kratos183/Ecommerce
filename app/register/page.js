@@ -26,8 +26,8 @@ export default function RegisterPage() {
       const data = await res.json();
 
       if (res.ok) {
-        setToast({ message: 'Registration successful!', type: 'success' });
-        setTimeout(() => window.location.href = '/', 1000);
+        setToast({ message: 'Account created! Please sign in.', type: 'success' });
+        setTimeout(() => window.location.href = '/login', 1000);
       } else {
         setToast({ message: data.error || 'Registration failed', type: 'error' });
       }
